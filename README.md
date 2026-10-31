@@ -2,6 +2,8 @@
 
 > 大可数序数记号的可视化浏览器，从 .NET Framework 4.8 WinForms 移植到浏览器。
 
+**简体中文** | [English](./README_EN.md)
+
 原程序是中文 googology（大数）社区的一个桌面工具：**主程序自己不做任何序数运算**，
 真正的记号系统由外部「序数记号」插件提供，两者通过 **ONP2（Ordinal Notation Protocol 2）** 通信。
 这个网页版完整保留了该设计，只是把插件形态从「控制台 exe + stdin/stdout」换成了「JS 模块 + 同步函数调用」。
@@ -50,6 +52,8 @@ npm run preview  # 预览构建产物
 `vite.config.ts` 里 `base: './'`，资源路径全是相对的，所以发布在
 `https://xxx.github.io/<仓库名>/` 这种子路径下也能正常工作 —— **改仓库名不需要动配置**。
 
+## 四、验证
+
 ```bash
 npx esbuild tests/verify.ts --bundle --platform=node --format=esm --outfile=/tmp/verify.mjs
 node /tmp/verify.mjs
@@ -64,7 +68,7 @@ node /tmp/verify.mjs
 
 ---
 
-## 四、目录结构
+## 五、目录结构
 
 ```
 src/
@@ -88,6 +92,7 @@ src/
    ├─ settings.ts         设置页
    └─ plugins.ts          记号列表页
 tests/verify.ts            逻辑自检（不依赖 DOM）
+docs/                      移植依据文档（协议条文、原项目说明、标识符对照表）
 public/plugins/            插件模板
 ```
 
@@ -96,7 +101,7 @@ public/plugins/            插件模板
 
 ---
 
-## 五、写一个自己的记号插件
+## 六、写一个自己的记号插件
 
 插件是一个**自包含的 ES module**（不要 import 其它本地文件），默认导出实现 ONP2 五个方法的对象：
 
@@ -129,7 +134,7 @@ export default {
 
 ---
 
-## 六、与原程序的差异
+## 七、与原程序的差异
 
 ### 架构上必须改的
 
@@ -176,7 +181,7 @@ export default {
 
 ---
 
-## 七、已知限制
+## 八、已知限制
 
 - **用户上传的插件只在当前浏览器有效**：源码存在 IndexedDB 里，换台机器 / 换个浏览器要重新添加。
   内置记号 `Omega2 (w^2)` 不受此限制。
@@ -188,9 +193,22 @@ export default {
 
 ---
 
-## 八、致谢与来源
+## 九、移植依据文档
+
+这次移植所依据的原始资料收录在 [`docs/`](./docs/README.md) 下（**均为 ASCII 文件名**，便于引用）：
+
+- [`docs/ONP2-protocol-and-restoration.md`](./docs/ONP2-protocol-and-restoration.md) —— ONP2 协议官方条文与逆向核对表、
+  混淆名 → 还原名对照、核心算法说明、配置文件字节级格式、插件编写清单
+- [`docs/original-vb-project.md`](./docs/original-vb-project.md) —— 原桌面程序的 README（目录结构、编译方法、已知问题）
+
+**VB 标识符 ↔ TypeScript 模块的对应关系表**见 [`docs/README.md`](./docs/README.md)。
+
+原 VB 源码（`.vb` 工程）**未收入本仓库**——网页版已是完整的 TypeScript 重写，
+需要逐行对照时请回到原还原项目。
+
+## 十、致谢与来源
 
 - 原程序：序数界面1 v1.5.4（中文 googology 社区）
 - 移植依据：反编译产物 `Form1.cs` 还原出的 `OrdinalInterface.vb` / `OrdinalInterface.Designer.vb`
-- 协议：《ONP2协议与还原说明.md》所载官方条文
-- 内置记号：`examples/Omega2Notation/Program.vb`
+- 协议：[`docs/ONP2-protocol-and-restoration.md`](./docs/ONP2-protocol-and-restoration.md) 所载官方条文
+- 内置记号：原项目的 `examples/Omega2Notation/Program.vb`（已移植为 `src/engine/omega2.ts`）
