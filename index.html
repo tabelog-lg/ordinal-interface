@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>序数界面1 v1.5.4 —— 网页版</title>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <span class="title">序数界面1 <span class="ver">v1.5.4</span></span>
+        <span class="engine-state">
+          当前记号：<b id="engine-name">（未装载）</b>
+        </span>
+      </header>
+
+      <nav class="tabs" id="tabs">
+        <button class="tab" data-tab="notation">选择序数记号</button>
+        <button class="tab" data-tab="misc">杂项</button>
+        <button class="tab" data-tab="tree">展开树</button>
+        <button class="tab" data-tab="ruler">序数尺</button>
+        <button class="tab" data-tab="settings">设置</button>
+      </nav>
+
+      <!-- 一、选择序数记号 -->
+      <section class="page" id="page-notation">
+        <div class="row">
+          <button id="btn-add" class="btn">添加序数记号位置</button>
+          <button id="btn-del" class="btn">删除序数记号位置</button>
+          <button id="btn-demo" class="btn ghost">下载插件模板</button>
+        </div>
+        <ul id="plugin-list" class="listbox"></ul>
+        <p class="hint">
+          网页版把「序数记号插件」从控制台 exe 换成了 JS 模块：一个自包含的 ES module，
+          默认导出实现 ONP2 五个方法的对象。内置记号 <code>Omega2 (w^2)</code>
+          由 <code>examples/Omega2Notation/Program.vb</code> 移植而来。
+        </p>
+      </section>
+
+      <!-- 二、杂项 -->
+      <section class="page" id="page-misc">
+        <div class="group">
+          <label for="tb4">序数表达式</label>
+          <input id="tb4" type="text" value="Limit" spellcheck="false" />
+          <button id="btn7" class="btn" disabled>返回序数类型</button>
+          <input id="tb5" type="text" readonly placeholder="结果" />
+        </div>
+
+        <div class="group">
+          <label for="tb10">序数表达式</label>
+          <input id="tb10" type="text" spellcheck="false" />
+          <button id="btn9" class="btn" disabled>返回前继序数</button>
+          <input id="tb9" type="text" readonly placeholder="结果" />
+        </div>
+
+        <div class="group">
+          <label for="tb1">极限序数</label>
+          <input id="tb1" type="text" value="Limit" spellcheck="false" />
+          <label for="tb2">序号</label>
+          <input id="tb2" type="text" value="3" spellcheck="false" />
+          <button id="btn2" class="btn" disabled>展开序数</button>
+          <input id="tb3" type="text" readonly placeholder="结果" />
+        </div>
+
+        <div class="group">
+          <label for="tb6">序数甲</label>
+          <input id="tb6" type="text" value="0" spellcheck="false" />
+          <label for="tb7">序数乙</label>
+          <input id="tb7" type="text" value="Limit" spellcheck="false" />
+          <button id="btn8" class="btn" disabled>大小比较</button>
+          <input id="tb8" type="text" readonly placeholder="结果" />
+        </div>
+      </section>
+
+      <!-- 三、展开树 -->
+      <section class="page" id="page-tree">
+        <canvas id="tree-canvas"></canvas>
+        <p class="hint">
+          滚轮上下滚动；点击一个<b class="c-limit">极限序数</b>行会在它下面插入一项；
+          勾选「展开树连续展开」则一路展开到底。
+        </p>
+      </section>
+
+      <!-- 四、序数尺 -->
+      <section class="page" id="page-ruler">
+        <canvas id="ruler-canvas"></canvas>
+        <p class="hint">
+          滚轮缩放：向下滚 = 拉远，向上滚 = 拉近。刻度按需生成，可以一直放大下去。
+        </p>
+      </section>
+
+      <!-- 五、设置 -->
+      <section class="page dark" id="page-settings">
+        <div class="opt-row">
+          <button id="cb4" class="toggle" aria-pressed="true">展开树连续展开</button>
+        </div>
+        <div class="opt-row">
+          <button id="cb1" class="toggle" aria-pressed="false">序数尺密集刻度</button>
+        </div>
+
+        <div class="opt-row">
+          <span class="opt-label">展开树的对齐模式:</span>
+          <div class="seg" id="align-group">
+            <button class="seg-btn" data-align="all">全部</button>
+            <button class="seg-btn" data-align="fs">基本序列</button>
+            <button class="seg-btn" data-align="continuous">连续展开</button>
+            <button class="seg-btn" data-align="hypcos">Hyp Cos</button>
+          </div>
+        </div>
+
+        <div class="opt-row">
+          <span class="opt-label">0和后继序数的文本颜色:</span>
+          <input id="btn1" type="color" value="#ff0000" />
+        </div>
+        <div class="opt-row">
+          <span class="opt-label">极限序数的文本颜色:</span>
+          <input id="btn5" type="color" value="#00ff00" />
+        </div>
+        <div class="opt-row">
+          <span class="opt-label">展开树和序数尺的背景颜色:</span>
+          <input id="btn6" type="color" value="#f0f0f0" />
+        </div>
+
+        <div class="opt-row">
+          <button id="btn-export" class="btn ghost">导出配置</button>
+          <button id="btn-import" class="btn ghost">导入配置</button>
+          <input id="file-config" type="file" accept=".json,.txt" hidden />
+        </div>
+        <p class="hint">
+          原程序把配置写在启动目录下的隐藏文件「1」里；网页版改用 localStorage，
+          并支持导入旧版配置文件（其中的插件路径无法复原，只恢复颜色与开关）。
+        </p>
+      </section>
+    </div>
+
+    <input id="file-plugin" type="file" accept=".js,.mjs" hidden />
+    <div id="toast" class="toast"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

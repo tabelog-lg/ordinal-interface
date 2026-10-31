@@ -1,0 +1,16 @@
+{
+  "name": "ordinal-interface",
+  "private": true,
+  "version": "1.5.4",
+  "description": "序数界面1 v1.5.4 的网页前端版 —— 大可数序数记号可视化浏览器（ONP2 协议）",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  }
+}
