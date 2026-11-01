@@ -1,19 +1,21 @@
 # 移植依据文档
 
-本目录收录这次网页版移植所依据的**原始资料**，与源码一并归档，便于逐行对照。
+本目录收录这次网页版移植所依据的**全部原始资料**，与源码一并归档，便于逐行对照。
 
-> 原 VB.NET 源码（`.vb` 工程）**未收入本仓库**——网页版已用 TypeScript 完全重写，
-> 需要对照源码时请回到原还原项目。
-
-## 收录的文件
-
-| 文件 | 说明 |
+| 路径 | 内容 |
 |---|---|
 | [`ONP2-protocol-and-restoration.md`](./ONP2-protocol-and-restoration.md) | ONP2 协议官方条文与逆向核对表、混淆名 → 还原名对照、两个核心算法的说明、配置文件字节级格式、编写插件的最小清单 |
 | [`original-vb-project.md`](./original-vb-project.md) | 原桌面程序的 README（目录结构、编译方法、用法、已知问题） |
+| [`restored/vb/`](./restored/vb/) | **还原出的完整 VB.NET 工程**（主项目 + 示例插件），目录结构按原样复原 |
 
-两份文档的内容都**未作改动**，只在开头加了一段说明出处的小节。
-文件名由原来的中文名改为纯 ASCII，方便在 GitHub Pages 与各类工具链里引用。
+## 关于文件名
+
+`ONP2-protocol-and-restoration.md` 与 `original-vb-project.md` 的内容**未作改动**，
+只各加了一段说明出处的小节；文件名由原来的中文名改为纯 ASCII，
+方便在 GitHub Pages 与各类工具链里引用。
+
+VB 源码保留原文件名与目录结构（`My Project\AssemblyInfo.vb` 照原样放在子目录下），
+这样 `.vbproj` 不用改就能直接构建。
 
 本仓库（网页前端版）的主说明见根目录的 [README.md](../README.md) / [README_EN.md](../README_EN.md)。
 
@@ -76,3 +78,18 @@
 
 `FirstExceeding` 在原程序里通过字段变量 `tempIndex` **以副作用的形式**返回找到的下标。
 网页版改成显式返回 `{ expr, index }` —— 展开树那个 bug 的修复正好需要这个下标。
+
+---
+
+## 已修复的原程序 bug
+
+还原说明里标了三处疑似原作者笔误，网页版都修掉了：
+
+| # | 位置 | 原行为 | 网页版 |
+|---|---|---|---|
+| 1 | `TreeClick` | 首次展开后把**像素坐标**写进 `Levels(0)`，第二次点击把它当基本列下标继续 `+1` | 写入 `FirstExceeding` 真正用到的下标 |
+| 2 | `SelectNotation` | 根节点 `Adjacent` 只有 4 槽（其它节点 6 槽），边界节点的邻接是 `Nothing` | 统一 6 槽，生不出节点时返回失败并夹紧视窗 |
+| 3 | `ValidateExpression` | 靠 `engineProcess.Responding` 判断卡死，并对已运行进程调 `Start()`（抛异常且无 try/catch） | 改用迭代上限兜底 |
+
+第 3 条在网页版里**必须**修：原程序靠"进程是否响应"判断，浏览器没有这个信号，
+而该循环本身存在死循环路径，不加上限的话插件一有偏差整个页面就冻结。
