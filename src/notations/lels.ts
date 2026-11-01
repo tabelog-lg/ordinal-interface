@@ -87,7 +87,17 @@ export class Lels extends MatrixNotation {
     const rowsA = A.rows;
     const B = txma(b, this.C, this.ymode);
     this.x = B.rows;
-    this.y = B.cols;
+    // ★ 原程序在第二次 txma 前只把 x 清 0，y（全局）没清；
+    //   txma 仅在读到第 2 行时才改写 y，所以 b 只有 1 行时 y 沿用 a 的列数。
+    const colsB = B.rows >= 2 ? B.cols : A.cols;
+    // ★ 有意偏离 exe 的修复（已与作者确认 exe 原样行为，但要求修掉）：
+    //   原程序这里直接用 colsB，于是**比较宽度只由 b 决定**，
+    //   a 比 b 多出来的列被忽略 —— 比较因此不反对称，例如
+    //     (0,0,0)(0,0,1) vs (0)(1) 两个方向都判“小于”，
+    //   而前者是 fsLimit(3)、后者是 fsLimit(1)，显然不该如此。
+    //   改成取两侧列数的较大值，多出来的列按 0 参与比较。
+    //   原实现为：this.y = colsB;
+    this.y = Math.max(A.cols, colsB);
     const mb = B.m;
 
     let i = 0;
@@ -204,22 +214,30 @@ export class Lels extends MatrixNotation {
         return;
       }
       let cut = -1;
-      let lastNZ = -1;
+      let lastNZ = -1; // 扫描段的 k：a[i-l] 里最靠右的非零列
       let nz = -1;
       let low = this.y;
       for (;;) {
         low--;
-        if (low < 0) {
-          mul = 0;
-          break;
-        }
+        // ★ 原程序的扫描是 for(j=y-1;j>=0;j--)，扫到底就自然结束，lf 保留最后一次算出的值。
+        //   早期复原在这里把 mul 清零了，于是本该走「抬升」分支的被降级成简单复制，
+        //   (0,0)(1,1)(2,0) 这类输入的展开结果就不对了。
+        if (low < 0) break;
         if (firstNZ === -1 && this.dAt(this.x - 1, low) !== 0) firstNZ = low;
         if (nz === -1 && this.dAt(r - pr, low) !== 0) nz = low;
         if (nz !== -1 && c0 - 1 <= nz)
           mul = Math.trunc(this.dAt(r - pr, low) / (this.dAt(this.x - 1 - pr, low) + 1));
         if (lastNZ === -1 && this.at(r - pr, low) !== 0) lastNZ = low;
-        if (!(firstNZ < lastNZ || lastNZ < 0)) break;
+        // ★ 原程序是 if(k<=k3&&k>-1) {lf=0;break;} —— break 前会先把 lf 清零。
+        //   早期复原漏了这一步（只在 low<0 时才清零），导致 (0,0)(1,1)(2,1)
+        //   这类输入的展开结果与源 exe 不符。
+        if (!(firstNZ < lastNZ || lastNZ < 0)) { mul = 0; break; }
       }
+      // ★ 原程序里扫描用的 k 与填充用的 au 是**两个**变量（k 在扫描里定，
+      //   au 在填充里从 -1 开始更新）。早期复原把两者合成了一个 lastNZ，
+      //   于是填充段第一轮的 j<au 判断就沿用了扫描得到的 k，
+      //   导致 (0,0)(1,1)(2,1) 这类输入展开结果不对。
+      let au = -1;
       for (let j = this.y - 1; j >= 0; j--) {
         if (mul < 1 || pr + this.x - 1 <= r) {
           this.dPut(r, j, this.dAt(r - pr, j));
@@ -228,13 +246,13 @@ export class Lels extends MatrixNotation {
           else this.dPut(r, j, this.dAt(r - pr, j) + this.dAt(this.x - 1, j) * mul);
           if (this.dAt(this.x - 1, j) !== 0 && cut === -1) cut = j;
         }
-        if (j < lastNZ) {
+        if (j < au) {
           this.put(r, j, this.dAt(r, j));
         } else {
           const pp = this.par1(r - pr);
           this.put(r, j, this.dAt(r, j) + this.at(pp + pr, j));
         }
-        if (this.dAt(r, j) !== 0 && lastNZ === -1) lastNZ = j;
+        if (this.dAt(r, j) !== 0 && au === -1) au = j;
       }
       r++;
     }

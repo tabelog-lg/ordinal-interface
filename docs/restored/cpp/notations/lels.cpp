@@ -54,8 +54,20 @@ void compare0(const char *sa, const char *sb) {
     x = rowsA; y = colsA;
     for (int r = 0; r < ROWMAX; r++)
         for (int j = 0; j < C; j++) d[r][j] = m[r][j];
+    // ★ 原程序在第二次 txma 前只把 x 清 0（y 是全局量，**没有**清）。
+    //   txma 仅在读到第 2 行时才改写 y，所以 sb 只有 1 行时 y 沿用 sa 的列数。
+    //   这里的 colsB 初值取 colsA，就是为了复现这一点。
+    colsB = colsA;
     txma<C>(sb, mb, rowsB, colsB, 1);
-    x = rowsB; y = colsB;
+    x = rowsB;
+    // ★ 有意偏离 exe 的修复（已与作者确认 exe 原样行为，但要求修掉）：
+    //   原程序这里直接 `y = colsB`，于是 **比较宽度只由 sb 决定**，
+    //   sa 比 sb 多出来的列被忽略 —— 比较因此不反对称，例如
+    //     (0,0,0)(0,0,1) vs (0)(1) 两个方向都判“小于”，
+    //   而前者是 fsLimit(3)、后者是 fsLimit(1)，显然不该如此。
+    //   改成取两侧列数的较大值，多出来的列按 0 参与比较。
+    //   原实现为：y = colsB;
+    y = max2(colsA, colsB);
     int i = 0;
     while (compa(&mb[i][0], &d[i][0]) == 0 && i < max2(rowsB, rowsA)) i++;
     int r = compa(&mb[i][0], &d[i][0]);
@@ -141,15 +153,26 @@ static void Ex(int (*mm)[C], int n) {
         for (;;) {
             low--;
             int jj = y;
-            if (low < 0) { mul = 0; goto fill; }
+            // ★ 原程序的扫描是 for(j=y-1;j>=0;j--)，扫到底就自然结束，lf 保留最后一次算出的值。
+            //   早期复原在这里把 mul 清零了，于是本该走「抬升」分支的被降级成简单复制，
+            //   (0,0)(1,1)(2,0) 这类输入的展开结果就不对了。
+            if (low < 0) goto fill;
             if (firstNZ == -1 && d[x - 1][low] != 0) firstNZ = low;
             if (nz == -1 && d[r - pr][low] != 0) nz = low;
             if (nz != -1 && c0 - 1 <= nz)
                 mul = d[r - pr][low] / (d[(x - 1) - pr][low] + 1);
             if (lastNZ == -1 && mm[r - pr][low] != 0) lastNZ = low;
-            if (!(firstNZ < lastNZ || lastNZ < 0)) break;
+            // ★ 原程序是 if(k<=k3&&k>-1) {lf=0;break;} —— break 前会先把 lf 清零。
+            //   早期复原漏了这一步（只在 low<0 时才清零），导致 (0,0)(1,1)(2,1)
+            //   这类输入的展开结果与源 exe 不符。
+            if (!(firstNZ < lastNZ || lastNZ < 0)) { mul = 0; break; }
         }
     fill:
+        // ★ 原程序里扫描用的 k 与填充用的 au 是**两个**变量（k 在扫描里定，
+        //   au 在填充里从 -1 开始更新）。早期复原把两者合成了一个 lastNZ，
+        //   于是填充段第一轮的 j<au 判断就沿用了扫描得到的 k，
+        //   导致 (0,0)(1,1)(2,1) 这类输入展开结果不对。
+        int au = -1;
         for (int j = y - 1; j >= 0; j--) {
             if (mul < 1 || pr + x - 1 <= r) {
                 d[r][j] = d[r - pr][j];
@@ -158,13 +181,13 @@ static void Ex(int (*mm)[C], int n) {
                 else         d[r][j] = d[r - pr][j] + d[x - 1][j] * mul;
                 if (d[x - 1][j] != 0 && cut == -1) cut = j;
             }
-            if (j < lastNZ) {
+            if (j < au) {
                 mm[r][j] = d[r][j];
             } else {
                 int *pp = par1(mm, r - pr);
                 mm[r][j] = d[r][j] + pp[j + pr * C];
             }
-            if (d[r][j] != 0 && lastNZ == -1) lastNZ = j;
+            if (d[r][j] != 0 && au == -1) au = j;
         }
         r++;
     }

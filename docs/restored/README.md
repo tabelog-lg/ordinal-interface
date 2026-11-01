@@ -7,6 +7,7 @@
 |---|---|
 | `cpp/` | 30 个记号的 **C++ 复原版**（第一批 27 个 C++ exe + 第二批 3 个 VB.NET exe 的 C++ 移植） |
 | `csharp/` | 第二批 3 个记号的 **VB.NET/C# 复原版**（还原回原始语言） |
+| `lels-original-source/LELS.cpp` | **LELS 的原始 C++ 源码**（作者提供）—— 唯一一个有原始源码的记号，用来给 `cpp/` 和 `src/notations/lels.ts` 做逐条对拍 |
 
 ## 为什么放 `docs/` 而不是 `public/`
 
@@ -20,6 +21,12 @@
 ## 怎么跑
 
 ```bash
+# LELS：拿原始源码编译出的可执行给复原版做对拍（375 条命令）
+# 注意：必须用 -O0 编 —— 原程序 txma() 返回局部数组地址（悬垂指针），
+#       -O1 以上会在 compare0 里段错误。另外原程序 expand() 里的 cc 是未初始化
+#       指针，跑命令 4 前需要给它补一个缓冲区（作者漏了声明）。
+g++ -O0 -o /tmp/lels_orig lels-original-source/LELS.cpp
+
 cd docs/restored/cpp && make          # 产出 bin/ 下 30 个可执行
 python3 test.py                       # 自洽性不变量（27 个 C++ 记号）
 python3 tools/check_vb.py             # 第二批 3 个：与 VB 直译版对拍
