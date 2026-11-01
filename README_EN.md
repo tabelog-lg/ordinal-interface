@@ -9,7 +9,7 @@ external "ordinal notation" plug-in, and the two talk over
 **ONP2 (Ordinal Notation Protocol 2)**. This web edition keeps that design intact; only the plug-in
 form changes, from *console exe + stdin/stdout* to *JS module + synchronous function calls*.
 
-🔗 **Live demo**: `https://tabelog-lg.github.io/ordinal-interface/` (available once the GitHub Actions run finishes)
+🔗 **Live demo**: `https://tabelog-lg.github.io/ordinal-interface/`
 　 Self-test page: `https://tabelog-lg.github.io/ordinal-interface/selftest.html`
 
 🌏 [中文说明](./README.md)
@@ -28,9 +28,15 @@ Five tabs, one-to-one with the original:
 | **Ruler** | Wheel to zoom, all the way along 0 → 1 → … → ω → ω·2 → … → ω² |
 | **Settings** | Colours, alignment mode, dense ticks / continuous expansion, config import & export |
 
-The built-in notation `Omega2 (w^2)` was ported line by line from
-`examples/Omega2Notation/Program.vb`. Expressions are plain ASCII:
-`0` `5` `w` `w*3` `w*3+7` `Limit` (= ω²).
+Two notations are built in, and expressions are always plain ASCII:
+
+| Notation | Covers | Example expressions |
+|---|---|---|
+| `Omega2 (w^2)` | below ω², ported line by line from `examples/Omega2Notation/Program.vb` | `0` `5` `w` `w*3` `w*3+7` `Limit` (= ω²) |
+| `OmegaOmega (w^w)` | below ω^ω, of the form Σ c[i]·ω^i | `w^2` `w^2*3+w*2+5` `w^3+w` `Limit` (= ω^ω) |
+
+The first entry in the list is the default notation; to change it, reorder the `BUILTINS` array in
+`src/engine/plugins.ts`.
 
 UI strings are kept verbatim from the original (in Chinese):
 *表达式不正确* / *序号不正确* / *表达式不是极限序数* / *表达式不是后继序数* / *极限序数* / *后继序数*.
@@ -60,14 +66,16 @@ sub-path such as `https://xxx.github.io/<repo>/` — **renaming the repo require
 ## 4. Tests
 
 ```bash
-npx esbuild tests/verify.ts --bundle --platform=node --format=esm --outfile=/tmp/verify.mjs
-node /tmp/verify.mjs
+npm run verify   # logic self-test
+npm run bench    # performance benchmark (for before/after comparisons)
 ```
 
-45 assertions covering the five protocol commands, expression parsing/formatting, the `Limit` and `0`
-short-circuits, expression validation, ruler initialisation and continuous zooming (including the
-out-of-bounds path when zooming all the way out to the top level, and 40 rounds of zooming back and
-forth), tree expansion on click (including the bug 1 fix), and scrolling.
+About 200 assertions covering the five protocol commands, expression parsing/formatting, the `Limit`
+and `0` short-circuits, expression validation, ruler initialisation and continuous zooming
+(including the out-of-bounds path when zooming all the way out to the top level, and 40 rounds of
+zooming back and forth), tree expansion on click (including the bug 1 fix), scrolling, plus a
+**cross-check of the binary search against a brute-force linear scan** (45 cases) and cache
+capacity limits.
 
 There is also an **in-browser self-test** at `selftest.html` (dev only): it draws into real canvases
 and verifies that pixels actually appear. Results are printed on the page and the tab title turns
@@ -84,6 +92,7 @@ src/
 ├─ engine/
 │  ├─ types.ts            ONP2 protocol definition (commands 1~5)
 │  ├─ omega2.ts           the ω² notation, ported line by line from Program.vb
+│  ├─ omegaOmega.ts       the ω^ω notation (second built-in)
 │  ├─ host.ts             engine host: six actions + result caching
 │  └─ plugins.ts          plug-in registry (built-in + user-uploaded, source in IndexedDB)
 ├─ core/
@@ -142,7 +151,13 @@ Protocol notes:
 - When the result is 0, always return the string `"0"`.
 
 Hit "Download plug-in template" for a skeleton; `public/plugins/omega2-example.js` is a complete,
-runnable reference implementation.
+runnable reference implementation, and the two built-ins `src/engine/omega2.ts` and
+`src/engine/omegaOmega.ts` are fuller examples.
+
+**To add another built-in notation** takes two steps: write the implementation under `src/engine/`,
+then add one line to the `BUILTINS` array in `src/engine/plugins.ts`
+(`{ id: 'builtin:xxx', load: ... }`). List rendering, the "built-in" badge and default selection are
+all generic — nothing else needs touching.
 
 ---
 
@@ -201,20 +216,83 @@ web edition defines its own layout, with row height driven by the CSS variable `
 
 ---
 
-## 8. Known limitations
+---
+
+## 8. Performance
+
+A round of targeted optimisation was done during the port. Everything was measured with
+`npm run bench` **before** changing anything — and the measurement showed there was really only
+one bottleneck: the linear scan in `FirstExceeding`.
+
+### Two algorithmic optimisations
+
+**1. `FirstExceeding`: linear scan → exponential search + binary search (O(n) → O(log n))**
+
+This function finds the first term of a fundamental sequence that exceeds a target. It is the core
+of ruler subdivision and runs on every wheel notch. The predicate `a < FS[i]` is monotone in `i`
+(fundamental sequences are strictly increasing), so binary search applies:
+
+| Case | Before | After | Speedup |
+|---|---|---|---|
+| `firstExceeding("w*500","Limit")` ×1000 | 82.17 ms | 4.83 ms | **17×** |
+| `firstExceeding("w*5000","Limit")` ×1000 | 1197.60 ms | 7.87 ms | **152×** |
+
+The important part is that it **no longer grows linearly with n** — previously a 10× larger n cost
+10× more time; now it is essentially constant. This is also what makes built-in notations as strong
+as ε₀ or Γ₀ viable (they would definitely have stalled before).
+
+Two safety nets: the exponential search has a cap (a plug-in whose fundamental sequence is not
+increasing trips it after about 20 doublings, instead of grinding through a million queries first),
+and after the binary search one extra query verifies that the preceding term does not exceed the
+target. **Correctness is cross-checked**: `tests/verify.ts` compares against a brute-force linear
+scan on 45 cases — including every power-of-two boundary, where off-by-one bugs hide — and all
+agree.
+
+**2. `ValidateExpression` result caching**
+
+An invalid string walks the entire approximation chain (measured at 0.5 ms per call), and clicking
+the same button repeatedly in the Misc tab paid that cost every time. With caching, repeated calls
+dropped from 982 ms per 2000 to **0.10 ms** (~10,000×).
+
+### Rendering
+
+- **Redraws coalesced through `requestAnimationFrame`**: no matter how many are triggered within a
+  frame — wheel spinning, window resizing, dragging a colour picker — only one paint happens.
+- **Forced synchronous layout removed**: `getComputedStyle` / `getBoundingClientRect` force the
+  browser to compute layout synchronously, and they were being called repeatedly on the per-frame
+  paint path and inside the wheel loop (`--row-h` was even queried on every access). Font family and
+  row height are now read once at construction, and the mouse coordinate is computed once outside
+  the wheel loop.
+- **`fillStyle` is only assigned when the colour actually changes**, instead of per row.
+
+### Memory
+
+Every query cache has a **capacity limit** (50,000 entries, evicted FIFO in batches). The ruler can
+zoom indefinitely and nodes are created lazily, so new query keys keep appearing — without a cap,
+memory would grow without bound. Switching notations clears all caches so results from two
+notations cannot bleed into each other.
+
+> Caching deliberately does **not** use LRU: moving a key to the end on a hit costs a `delete` plus
+> a `set`, which measured at 0.9 ms → 5.5 ms per 10,000 hits. Plain FIFO makes `get` a single
+> `Map.get` with zero overhead; the cost is that hot entries can also be evicted, but they are
+> refilled on the next query, which matters far less than a permanent per-hit cost.
+
+## 9. Known limitations
 
 - **User-uploaded plug-ins only exist in the current browser**: their source lives in IndexedDB, so
   another machine or browser needs a fresh upload. The built-in `Omega2 (w^2)` is unaffected.
 - **Old config files import only partially**: colours, alignment mode and the two switches are
   restored; the plug-in exe paths inside cannot be resolved in a browser (no real paths, and exes
   cannot be executed).
-- **The ruler has limited room to zoom under the ω² notation**: this system stops at ω², and zooming
-  near ω runs into many "no ordinal in between" gaps. To zoom on toward ε₀ or Γ₀ you need a stronger
-  notation plug-in.
+- **How deep the ruler can zoom depends on the notation itself**: ω² stops at ω², ω^ω stops at ω^ω,
+  and zooming near the upper bound runs into many "no ordinal in between" gaps — a property of the
+  ordinals, not a bug. Zooming on toward ε₀ or Γ₀ requires a stronger notation plug-in. Note that
+  with a stronger notation the linear scan in `FirstExceeding` becomes the bottleneck; see
+  "Writing your own notation plug-in".
 
 ---
 
-## 9. Source material
+## 10. Source material
 
 The documents this port was based on live in [`docs/`](./docs/README.md) (**in Chinese**):
 

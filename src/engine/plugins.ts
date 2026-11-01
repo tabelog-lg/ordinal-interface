@@ -5,16 +5,15 @@
  * 于是插件形态换成 **JS 模块**：一个自包含的 ES module，默认导出 ONP2Plugin 对象
  * （或返回它的工厂函数）。见 public/plugins/omega2-example.js。
  *
- * 内置插件：Omega2 (w^2)（由 examples/Omega2Notation/Program.vb 移植）。
+ * 内置记号用 **BUILTINS 注册表**声明（见下），新增一个内置记号只需要往数组里加一行。
  * 用户上传的插件源码存 IndexedDB，刷新后仍在 —— 原程序的"记住 exe 路径"在这里由
  * "记住插件源码"替代，这也是网页版唯一能真正复原的持久化方式。
  */
 
 import { resolvePlugin, type ONP2Plugin } from './types';
-import { omega2Notation } from './omega2';
 
 export interface PluginEntry {
-  /** 'builtin:omega2' 或 'user:<timestamp>' */
+  /** 'builtin:<key>' 或 'user:<timestamp>' */
   id: string;
   name: string;
   builtin: boolean;
@@ -29,6 +28,41 @@ interface StoredPlugin {
 const DB_NAME = 'ordinal-interface';
 const STORE = 'plugins';
 const DB_VERSION = 1;
+
+// ————————————————————————————————————————————————
+//  内置记号注册表
+// ————————————————————————————————————————————————
+
+interface BuiltinDef {
+  id: string;
+  /**
+   * 懒加载工厂。用动态 import 而不是静态 import，
+   * 这样记号的实现代码不会全塞进主 bundle —— instantiate() 本来就是 async 的，
+   * 改成懒加载对调用方完全透明。
+   */
+  load: () => Promise<ONP2Plugin>;
+}
+
+/**
+ * 所有内置记号。**数组顺序即列表顺序，第一项是默认记号。**
+ *
+ * 新增一个内置记号：在 src/engine/ 下写好实现，然后在这里加一行
+ *   { id: 'builtin:xxx', load: async () => (await import('./xxx')).xxxNotation },
+ * UI、列表渲染、默认选中逻辑都是通用的，不需要再改别处。
+ */
+const BUILTINS: BuiltinDef[] = [
+  {
+    id: 'builtin:omega2',
+    load: async () => (await import('./omega2')).omega2Notation,
+  },
+  {
+    id: 'builtin:omegaOmega',
+    load: async () => (await import('./omegaOmega')).omegaOmegaNotation,
+  },
+];
+
+/** 内置记号的名字：启动时 import 一次取回来，之后列表直接用 */
+const builtinNames = new Map<string, string>();
 
 // ————————————————————————————————————————————————
 //  极简 IndexedDB 封装
@@ -98,17 +132,33 @@ const IDB_TIMEOUT = 3000;
 //  仓库
 // ————————————————————————————————————————————————
 
-const BUILTIN: PluginEntry[] = [{ id: 'builtin:omega2', name: omega2Notation.name, builtin: true }];
-
 let userEntries: PluginEntry[] = [];
 
-/** 列出所有可用记号（内置在前，用户上传的按添加顺序） */
+/** 列出所有可用记号（内置在前、按 BUILTINS 顺序；用户上传的按添加顺序） */
 export function listPlugins(): PluginEntry[] {
-  return [...BUILTIN, ...userEntries];
+  const builtin = BUILTINS.map((b) => ({
+    id: b.id,
+    name: builtinNames.get(b.id) ?? b.id,
+    builtin: true,
+  }));
+  return [...builtin, ...userEntries];
 }
 
-/** 启动时把上次上传的插件元信息读回来（不读源码，源码按需加载） */
+/**
+ * 启动时装载：内置记号取名字（本地模块，代价极小），用户插件从 IndexedDB 读元信息
+ * （不读源码，源码按需加载）。
+ */
 export async function restorePlugins(): Promise<void> {
+  await Promise.all(
+    BUILTINS.map(async (b) => {
+      try {
+        builtinNames.set(b.id, (await b.load()).name);
+      } catch {
+        builtinNames.delete(b.id); // 装载失败就不列出来，但应用照样启动
+      }
+    }),
+  );
+
   try {
     const all = await withTimeout(idbGetAll(), IDB_TIMEOUT, [] as StoredPlugin[]);
     userEntries = all.map((r) => ({ id: r.id, name: r.name, builtin: false }));
@@ -119,7 +169,8 @@ export async function restorePlugins(): Promise<void> {
 
 /** 装载一个插件实例 */
 export async function instantiate(entry: PluginEntry): Promise<ONP2Plugin> {
-  if (entry.id === 'builtin:omega2') return omega2Notation;
+  const builtin = BUILTINS.find((b) => b.id === entry.id);
+  if (builtin) return builtin.load();
 
   const all = await withTimeout(idbGetAll(), IDB_TIMEOUT, [] as StoredPlugin[]);
   const rec = all.find((r) => r.id === entry.id);
