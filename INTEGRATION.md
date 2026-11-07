@@ -147,20 +147,34 @@ integration/                       ← 已改好的项目副本
 
 ---
 
-## 附：PPS4 另一版本（2026-11-07 追加）
+## 附：PPS4 替换（2026-11-07 发现 → 2026-11-08 定案）
 
-又给了一份 `Parented Predecessor Sequence 4.exe.c`（覆盖了 11/1 那份）。
+2026-11-07 又给了一份 `Parented Predecessor Sequence 4.exe.c`（覆盖了 11/1 那份）。
 它**不是**已有的 weak / second / third / extremely weak 变体，而是同一记号的
 另一个实现：只有 `Ex()` 的「末元素降级」扫描下界不同
 （旧版扫到 `a[p]-1`，新版一路扫到下标 0，且回退判断移到循环外）。
-
-已新增 `src/notations/pps4_v2.ts`（id `pps4_v2`）并注册进 `BUILTINS`。
 实测 546 条命令：命令 1/2/3/5 完全一致，**53 条差异全部落在命令 4**。
-完整对照见 `docs/pps4-v2.md`。
+
+**2026-11-08 定案**：用户提供的 exe 对应 11/7 那份实现，11/1 的旧复原版有问题，
+因此**删除旧 `pps4`**，把 11/7 的实现从 `pps4_v2` 提升为唯一的 `pps4`：
+
+| 项 | 变更 |
+|---|---|
+| 记号数 | 注册表、`BUILTINS`、`NOTATION_NAMES` 均 31 → **30**；内置总数 33 → **32** |
+| 文件 | 删 `src/notations/pps4_v2.ts`、`docs/restored/cpp/notations/pps4_v2.cpp`；`pps4.ts` / `pps4.cpp` 换成新实现 |
+| 名字 | `name` / `name0()` 统一为 `Parented Predecessor Sequence 4`（无 `(v2)` 后缀） |
+| 框架 | `DEC_SCAN_LE`（旧模式）从 `core/seq.ts` 与 `cpp/common.h` 删除，`DEC_SCAN_LE_WIDE` 成为 PPS4 唯一模式 |
+| 测试 | `tests/verify_notations.mjs` 新增 A7 组，B 组期望值换成 exe 口径（88 → **95** 条） |
+
+当前实现说明见 [`docs/pps4-v2.md`](docs/pps4-v2.md)；**历史归档**（逐函数 diff、
+546 条对拍输出、`txar` 推导、改动文件副本、诊断脚本）见
+[`docs/pps4-v2-changes/README.md`](docs/pps4-v2-changes/README.md)——
+那是 11/7 的快照，文中的 `pps4_v2` 路径与「两版并存」表述不再代表当前状态。
 
 顺带修掉解析时发现的 `txar()` 步进偏差（原程序 `flzero()` 表明用
-`(v + (v==0))*100+1`，复原版误用 `(v+bias)*100+1`），影响 10 个 bias=1 记号
-在元素值为 9/99/999 时的解析；已加回归用例。同样详见 `docs/pps4-v2.md`。
+`(v + (v==0))*100+1`，复原版误用 `(v+bias)*100+1`），影响 9 个 bias=1 记号
+在元素值为 9/99/999 时的解析；已加回归用例。推导与影响范围见
+[`docs/pps4-v2-changes/03-txar-fix.md`](docs/pps4-v2-changes/03-txar-fix.md)。
 
 
 ---
@@ -174,3 +188,23 @@ integration/                       ← 已改好的项目副本
 
 基准口径、不改项清单、已知限制与复现命令见 [`docs/IMPLEMENTATION-NOTES.md`](docs/IMPLEMENTATION-NOTES.md)。
 回归用例：`npm run verify:notations`。
+
+---
+
+## 附：文档导航（2026-11-07）
+
+全部文档的总索引是 [`docs/README.md`](docs/README.md)。与本文相关的几处：
+
+| 想找 | 去哪 |
+|---|---|
+| 11 份实现审查报告与基准原文 | [`docs/reviews/README.md`](docs/reviews/README.md) |
+| PPS4 当前实现依据 | [`docs/pps4-v2.md`](docs/pps4-v2.md) |
+| PPS4 两版对照的历史归档 | [`docs/pps4-v2-changes/README.md`](docs/pps4-v2-changes/README.md) |
+| 反编译切片、远端快照、已删临时文件的清单 | [`docs/process-artifacts/README.md`](docs/process-artifacts/README.md) |
+| 可编译的 C++ / C# / VB 复原源码与对拍流程 | [`docs/restored/README.md`](docs/restored/README.md) |
+| 实现基准与本次修正取舍 | [`docs/IMPLEMENTATION-NOTES.md`](docs/IMPLEMENTATION-NOTES.md) |
+| 26 个 exe ⇄ TS 记号的对拍工具与报告判读 | [`docs/crosscheck.md`](docs/crosscheck.md) |
+| 每轮改了哪些文件、资料来源 | [`docs/CHANGELOG.md`](docs/CHANGELOG.md) |
+
+`docs/` 不参与构建（`tsconfig.json` 的 `include` 只有 `["src"]`），
+增删文档不会影响 `npm run build` 的结果。

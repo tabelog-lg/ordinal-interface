@@ -33,7 +33,9 @@ msbuild OrdinalInterface.vbproj /p:Configuration=Release
 产物在 `bin\Release\OrdinalInterface.exe`。用 Visual Studio 打开 `.vbproj` 按 F5 也可以
 （VS 2015 ~ 2022 均可）。`dotnet build` 不支持这种传统格式的 `.vbproj`，需要改用 SDK 风格项目。
 
-> `.vbproj` 里有两条 `<None Include="ONP2协议与还原说明.md" />` 和 `<None Include="README.md" />`。
+> `.vbproj` 里有两条 `<None Include="ONP2-protocol-and-restoration.md" />` 和
+> `<None Include="README.md" />`。原工程写的是中文文件名，入库时按仓库约定统一 ASCII 化；
+> 这两条只是「随项目附带的说明文件」列表项，不参与编译。
 > 这两份文档在本仓库里放在**上一层**（[`docs/`](../../README.md)），不在本目录。
 > `None` 项只是给 IDE 显示用的、不参与编译，所以缺它们不影响构建；
 > 想让解决方案资源管理器里不显示警告，把那两个文件复制进来即可。

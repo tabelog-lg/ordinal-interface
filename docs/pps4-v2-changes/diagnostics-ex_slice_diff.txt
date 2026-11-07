@@ -1,0 +1,68 @@
+新版函数: ['flzero(int)', 'arout(int*)', 'txar(char*)', 'limit(char*)', 'type0(char*)', 'precursor(char*)', 'expand(char*, char*)', 'compare0(char*, char*)', 'name0()', 'precpr(int*, int*, int)', 'Ex(int*, int)', '__static_initialization_and_destruction_0(int, int)']
+旧版函数: ['txar(char*)', 'limit(char*)', 'type0(char*)', 'precursor(char*)', 'expand(char*, char*)', 'compare0(char*, char*)', 'name0()', 'precpr(int*, int*, int)', 'Ex(int*, int)']
+
+=== 同名函数逐字比对（归一化空白后）===
+  Ex(int*, int)                          相同=False
+  compare0(char*, char*)                 相同=True
+  expand(char*, char*)                   相同=True
+  limit(char*)                           相同=True
+  name0()                                相同=True
+  precpr(int*, int*, int)                相同=True
+  precursor(char*)                       相同=True
+  txar(char*)                            相同=False
+  type0(char*)                           相同=True
+
+=== Ex() 的 unified diff（旧 -> 新）===
+--- 旧版 11/1
++++ 新版 11/7
+@@ -2,9 +2,9 @@
+   int iVar1;
+   int iVar2;
+   int iVar3;
+-  undefined4 local_14;
+-  undefined4 local_10;
+-  undefined4 local_c;
++  int local_14;
++  int local_10;
++  int local_c;
+   
+   iVar1 = *(int *)(param_1 + (longlong)x * 4 + -4);
+   iVar2 = iVar1 + -2;
+@@ -16,16 +16,17 @@
+     }
+   }
+   if (*(int *)(param_1 + (longlong)x * 4 + -4) != *(int *)(param_1 + (longlong)iVar2 * 4)) {
+-    for (local_c = *(int *)(param_1 + (longlong)x * 4 + -4) + -3;
+-        *(int *)(param_1 + (longlong)iVar2 * 4) + -1 <= local_c; local_c = local_c + -1) {
+-      if (*(int *)(param_1 + (longlong)local_c * 4) <= *(int *)(param_1 + (longlong)iVar2 * 4)) {
++    for (local_c = *(int *)(param_1 + (longlong)x * 4 + -4) + -3; -1 < local_c;
++        local_c = local_c + -1) {
++      if (*(int *)(param_1 + (longlong)local_c * 4) <=
++          *(int *)(param_1 + (longlong)*(int *)(param_1 + (longlong)x * 4 + -4) * 4 + -8)) {
+         *(int *)(param_1 + (longlong)x * 4 + -4) = local_c + 2;
+         break;
+       }
+-      if (local_c == *(int *)(param_1 + (longlong)iVar2 * 4) + -1) {
+-        *(undefined4 *)(param_1 + (longlong)x * 4 + -4) =
+-             *(undefined4 *)((longlong)iVar2 * 4 + param_1);
+-      }
++    }
++    if (local_c == -1) {
++      *(undefined4 *)(param_1 + (longlong)x * 4 + -4) =
++           *(undefined4 *)((longlong)iVar2 * 4 + param_1);
+     }
+   }
+   for (local_c = 0; local_c < param_2; local_c = local_c + 1) {
+@@ -49,3 +50,12 @@
+   *(undefined4 *)(param_1 + (longlong)(param_2 * iVar3 + x + -1) * 4) = 0;
+   return;
+ }
++
++
++
++void __tcf_0(void)
++
++{
++  std::ios_base::Init::~Init((Init *)&std::__ioinit);
++  return;
++}

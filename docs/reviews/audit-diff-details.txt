@@ -1,0 +1,1581 @@
+不一致明细（mismatch / ts_only_bad）
+============================================================
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["1", "(0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["2", "(0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["3", "(0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["5", "(0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["1", "(0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["2", "(0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["3", "(0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["5", "(0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bashicu_matrix] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bm41] tag=mut source=mut cmd=4 args=["1", "(0)(0)(0)(0)"]
+    exe : '(0)(0)(0)(0)(0)(0)'
+    ts  : '(0)(0)(0)(0)'
+    note: mutated fs  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["1", "(0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["2", "(0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["3", "(0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["5", "(0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["1", "(0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["2", "(0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["3", "(0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["5", "(0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bm41] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["1", "(0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["2", "(0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["3", "(0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["5", "(0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["1", "(0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["2", "(0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["3", "(0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["5", "(0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_stronf] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["1", "(0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["2", "(0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["3", "(0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["5", "(0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["1", "(0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["2", "(0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["3", "(0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["5", "(0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0,0)"]
+    exe : '(('
+    ts  : '()'
+    note: fs(n=1)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0,0)"]
+    exe : '(((('
+    ts  : '()()'
+    note: fs(n=2)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0,0)"]
+    exe : '(((((('
+    ts  : '()()()'
+    note: fs(n=3)  batch=crash/ok
+
+[bms_upgradissimo] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0,0)"]
+    exe : '(((((((((('
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=crash/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '(0)'
+    note: fs(n=1)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=2)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=3)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=5)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '(0)'
+    note: fs(n=1)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=2)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=3)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=5)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '(0)'
+    note: fs(n=1)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=2)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=3)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=5)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '(0)'
+    note: fs(n=1)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=2)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=3)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=5)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '(0)'
+    note: fs(n=1)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=2)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=3)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=5)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '(0)'
+    note: fs(n=1)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=2)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=3)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=5)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '(0)'
+    note: fs(n=1)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=2)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=3)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=5)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '(0)'
+    note: fs(n=1)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=2)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=3)  batch=ok/ok
+
+[bms_row_extend] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '(0)(0)(0)(0)(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)'
+    note: fs(n=5)  batch=ok/ok
+
+[lels] tag=cmd4 source=probe cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=1)  batch=crash/timeout
+
+[lels] tag=cmd4 source=probe cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=2)  batch=crash/timeout
+
+[lels] tag=cmd4 source=probe cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=3)  batch=crash/timeout
+
+[lels] tag=cmd4 source=probe cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=5)  batch=crash/timeout
+
+[lels] tag=cmd5 source=probe cmd=5 args=["(0,0,0)(0,0,1)", "(0)(1)"]
+    exe : '2'
+    ts  : '1'
+    note: pair  batch=crash/ok
+
+[lels] tag=cmd5 source=probe cmd=5 args=["(0,0,0,0,0)(0,0,0,0,1)", "(0,0,0)(1,1,1)(2,2,1)"]
+    exe : '2'
+    ts  : '1'
+    note: pair  batch=crash/ok
+
+[lels] tag=cmd5 source=probe cmd=5 args=["(0,0,0,0,0)(0,0,0,0,1)", "(0,0,0)(0,0,1)"]
+    exe : '2'
+    ts  : '1'
+    note: pair  batch=crash/ok
+
+[lels] tag=cmd5 source=probe cmd=5 args=["(0,0,0,0,0)(0,0,0,0,1)", "(0,0)(1,1)(2,2)"]
+    exe : '2'
+    ts  : '1'
+    note: pair  batch=crash/ok
+
+[lels] tag=cmd5 source=probe cmd=5 args=["(0,0,0,0,0)(0,0,0,0,1)", "(0,0)(0,1)"]
+    exe : '2'
+    ts  : '1'
+    note: pair  batch=crash/ok
+
+[lels] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=1)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=2)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=3)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=5)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["1", "(0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=1)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["2", "(0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=2)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["3", "(0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=3)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["5", "(0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=5)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["1", "(0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=1)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["2", "(0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=2)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["3", "(0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=3)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["5", "(0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=5)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=1)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=2)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=3)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=5)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=1)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=2)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=3)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=5)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=1)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=2)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=3)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=5)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=1)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=2)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=3)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=5)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=1)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=2)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=3)  batch=crash/timeout
+
+[lels] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '__TS_TIMEOUT__'
+    note: fs(n=5)  batch=crash/timeout
+
+[parented_bms] tag=cmd4 source=probe cmd=4 args=["1", "(0)(0)"]
+    exe : '(0)(1925382196)(2)'
+    ts  : '(0)(0)(2)'
+    note: fs(n=1)  batch=ok/ok
+
+[parented_bms] tag=cmd4 source=probe cmd=4 args=["2", "(0)(0)"]
+    exe : '(0)(1925382196)(2)(1925382196)(4)'
+    ts  : '(0)(0)(2)(0)(4)'
+    note: fs(n=2)  batch=ok/ok
+
+[parented_bms] tag=cmd4 source=probe cmd=4 args=["3", "(0)(0)"]
+    exe : '(0)(1925382196)(2)(1925382196)(4)(1925382196)(6)'
+    ts  : '(0)(0)(2)(0)(4)(0)(6)'
+    note: fs(n=3)  batch=ok/ok
+
+[parented_bms] tag=cmd4 source=probe cmd=4 args=["5", "(0)(0)"]
+    exe : '(0)(1925382196)(2)(1925382196)(4)(1925382196)(6)(1925382196)(8)(1925382196)(10)'
+    ts  : '(0)(0)(2)(0)(4)(0)(6)(0)(8)(0)(10)'
+    note: fs(n=5)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '()'
+    note: fs(n=1)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '()()'
+    note: fs(n=2)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '()()()'
+    note: fs(n=3)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["1", "(0)"]
+    exe : ''
+    ts  : '()'
+    note: fs(n=1)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["2", "(0)"]
+    exe : ''
+    ts  : '()()'
+    note: fs(n=2)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["3", "(0)"]
+    exe : ''
+    ts  : '()()()'
+    note: fs(n=3)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["5", "(0)"]
+    exe : ''
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["1", "(0,0)"]
+    exe : ''
+    ts  : '()'
+    note: fs(n=1)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["2", "(0,0)"]
+    exe : ''
+    ts  : '()()'
+    note: fs(n=2)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["3", "(0,0)"]
+    exe : ''
+    ts  : '()()()'
+    note: fs(n=3)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["5", "(0,0)"]
+    exe : ''
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["1", "(0,0,0)"]
+    exe : ''
+    ts  : '()'
+    note: fs(n=1)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["2", "(0,0,0)"]
+    exe : ''
+    ts  : '()()'
+    note: fs(n=2)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["3", "(0,0,0)"]
+    exe : ''
+    ts  : '()()()'
+    note: fs(n=3)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["5", "(0,0,0)"]
+    exe : ''
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0)"]
+    exe : ''
+    ts  : '()'
+    note: fs(n=1)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0)"]
+    exe : ''
+    ts  : '()()'
+    note: fs(n=2)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0)"]
+    exe : ''
+    ts  : '()()()'
+    note: fs(n=3)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0)"]
+    exe : ''
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0)"]
+    exe : ''
+    ts  : '()'
+    note: fs(n=1)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0)"]
+    exe : ''
+    ts  : '()()'
+    note: fs(n=2)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0)"]
+    exe : ''
+    ts  : '()()()'
+    note: fs(n=3)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0)"]
+    exe : ''
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '()'
+    note: fs(n=1)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '()()'
+    note: fs(n=2)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '()()()'
+    note: fs(n=3)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["1", "(0,0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '()'
+    note: fs(n=1)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["2", "(0,0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '()()'
+    note: fs(n=2)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["3", "(0,0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '()()()'
+    note: fs(n=3)  batch=ok/ok
+
+[parented_bms] tag=deep source=deep cmd=4 args=["5", "(0,0,0,0,0,0,0)"]
+    exe : ''
+    ts  : '()()()()()'
+    note: fs(n=5)  batch=ok/ok
+
+[ppm00t] tag=cmd4 source=probe cmd=4 args=["1", "(0)(0)"]
+    exe : '(0)(1925382196)(2)'
+    ts  : '(0)(0)(2)'
+    note: fs(n=1)  batch=crash/ok
+
+[ppm00t] tag=cmd4 source=probe cmd=4 args=["2", "(0)(0)"]
+    exe : '(0)(1925382196)(2)(1925382196)(4)'
+    ts  : '(0)(0)(2)(0)(4)'
+    note: fs(n=2)  batch=crash/ok
+
+[ppm00t] tag=cmd4 source=probe cmd=4 args=["3", "(0)(0)"]
+    exe : '(0)(1925382196)(2)(1925382196)(4)(1925382196)(6)'
+    ts  : '(0)(0)(2)(0)(4)(0)(6)'
+    note: fs(n=3)  batch=crash/ok
+
+[ppm00t] tag=cmd4 source=probe cmd=4 args=["5", "(0)(0)"]
+    exe : '(0)(1925382196)(2)(1925382196)(4)(1925382196)(6)(1925382196)(8)(1925382196)(10)'
+    ts  : '(0)(0)(2)(0)(4)(0)(6)(0)(8)(0)(10)'
+    note: fs(n=5)  batch=crash/ok
+
+[ppm00t] tag=mut source=mut cmd=4 args=["1", "(0)(0)"]
+    exe : '(0)(1925382196)(2)'
+    ts  : '(0)(0)(2)'
+    note: mutated fs  batch=crash/ok
+
+[ppm00t] tag=deep source=deep cmd=4 args=["1", "(0)(0)"]
+    exe : '(0)(1925382196)(2)'
+    ts  : '(0)(0)(2)'
+    note: fs(n=1)  batch=crash/ok
+
+[ppm00t] tag=deep source=deep cmd=4 args=["2", "(0)(0)"]
+    exe : '(0)(1925382196)(2)(1925382196)(4)'
+    ts  : '(0)(0)(2)(0)(4)'
+    note: fs(n=2)  batch=crash/ok
+
+[ppm00t] tag=deep source=deep cmd=4 args=["3", "(0)(0)"]
+    exe : '(0)(1925382196)(2)(1925382196)(4)(1925382196)(6)'
+    ts  : '(0)(0)(2)(0)(4)(0)(6)'
+    note: fs(n=3)  batch=crash/ok
+
+[ppm00t] tag=deep source=deep cmd=4 args=["5", "(0)(0)"]
+    exe : '(0)(1925382196)(2)(1925382196)(4)(1925382196)(6)(1925382196)(8)(1925382196)(10)'
+    ts  : '(0)(0)(2)(0)(4)(0)(6)(0)(8)(0)(10)'
+    note: fs(n=5)  batch=crash/ok
+
+[ppm3] tag=cmd4 source=probe cmd=4 args=["1", "(0)(0)"]
+    exe : '(0)(1925382195)(2)'
+    ts  : '(0)(0)(2)'
+    note: fs(n=1)  batch=ok/ok
+
+[ppm3] tag=cmd4 source=probe cmd=4 args=["2", "(0)(0)"]
+    exe : '(0)(1925382195)(2)(1925382195)(4)'
+    ts  : '(0)(0)(2)(0)(4)'
+    note: fs(n=2)  batch=ok/ok
+
+[ppm3] tag=cmd4 source=probe cmd=4 args=["3", "(0)(0)"]
+    exe : '(0)(1925382195)(2)(1925382195)(4)(1925382195)(6)'
+    ts  : '(0)(0)(2)(0)(4)(0)(6)'
+    note: fs(n=3)  batch=ok/ok
+
+[ppm3] tag=cmd4 source=probe cmd=4 args=["5", "(0)(0)"]
+    exe : '(0)(1925382195)(2)(1925382195)(4)(1925382195)(6)(1925382195)(8)(1925382195)(10)'
+    ts  : '(0)(0)(2)(0)(4)(0)(6)(0)(8)(0)(10)'
+    note: fs(n=5)  batch=ok/ok
+
+[ppm3] tag=mut source=mut cmd=4 args=["1", "(0)(0)(0)"]
+    exe : '(0)(0)(1925382196)(3)(3)'
+    ts  : '(0)(0)(0)(3)(3)'
+    note: mutated fs  batch=crash/ok
+
+[ppm] tag=cmd4 source=probe cmd=4 args=["1", "(0)(0)"]
+    exe : '(0)(1925382195)(2)'
+    ts  : '(0)(0)(2)'
+    note: fs(n=1)  batch=ok/ok
+
+[ppm] tag=cmd4 source=probe cmd=4 args=["2", "(0)(0)"]
+    exe : '(0)(1925382195)(2)(1925382195)(4)'
+    ts  : '(0)(0)(2)(0)(4)'
+    note: fs(n=2)  batch=ok/ok
+
+[ppm] tag=cmd4 source=probe cmd=4 args=["3", "(0)(0)"]
+    exe : '(0)(1925382195)(2)(1925382195)(4)(1925382195)(6)'
+    ts  : '(0)(0)(2)(0)(4)(0)(6)'
+    note: fs(n=3)  batch=ok/ok
+
+[ppm] tag=cmd4 source=probe cmd=4 args=["5", "(0)(0)"]
+    exe : '(0)(1925382195)(2)(1925382195)(4)(1925382195)(6)(1925382195)(8)(1925382195)(10)'
+    ts  : '(0)(0)(2)(0)(4)(0)(6)(0)(8)(0)(10)'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["1", "0,1"]
+    exe : '0,0'
+    ts  : '0,1'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["2", "0,1"]
+    exe : '0,0,0'
+    ts  : '0,1,1'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["3", "0,1"]
+    exe : '0,0,0,0'
+    ts  : '0,1,1,1'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["5", "0,1"]
+    exe : '0,0,0,0,0,0'
+    ts  : '0,1,1,1,1,1'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["1", "0,1,2"]
+    exe : '0,1,1'
+    ts  : '0,1,2'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["2", "0,1,2"]
+    exe : '0,1,1,1'
+    ts  : '0,1,2,2'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["3", "0,1,2"]
+    exe : '0,1,1,1,1'
+    ts  : '0,1,2,2,2'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["5", "0,1,2"]
+    exe : '0,1,1,1,1,1,1'
+    ts  : '0,1,2,2,2,2,2'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["1", "0,1,2,3"]
+    exe : '0,1,2,2'
+    ts  : '0,1,2,3'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["2", "0,1,2,3"]
+    exe : '0,1,2,2,2'
+    ts  : '0,1,2,3,3'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["3", "0,1,2,3"]
+    exe : '0,1,2,2,2,2'
+    ts  : '0,1,2,3,3,3'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["5", "0,1,2,3"]
+    exe : '0,1,2,2,2,2,2,2'
+    ts  : '0,1,2,3,3,3,3,3'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["1", "0,1,2,3,4"]
+    exe : '0,1,2,3,3'
+    ts  : '0,1,2,3,4'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["2", "0,1,2,3,4"]
+    exe : '0,1,2,3,3,3'
+    ts  : '0,1,2,3,4,4'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["3", "0,1,2,3,4"]
+    exe : '0,1,2,3,3,3,3'
+    ts  : '0,1,2,3,4,4,4'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["5", "0,1,2,3,4"]
+    exe : '0,1,2,3,3,3,3,3,3'
+    ts  : '0,1,2,3,4,4,4,4,4'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["1", "0,1,2,3,4,5"]
+    exe : '0,1,2,3,4,4'
+    ts  : '0,1,2,3,4,5'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["2", "0,1,2,3,4,5"]
+    exe : '0,1,2,3,4,4,4'
+    ts  : '0,1,2,3,4,5,5'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["3", "0,1,2,3,4,5"]
+    exe : '0,1,2,3,4,4,4,4'
+    ts  : '0,1,2,3,4,5,5,5'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["5", "0,1,2,3,4,5"]
+    exe : '0,1,2,3,4,4,4,4,4,4'
+    ts  : '0,1,2,3,4,5,5,5,5,5'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["1", "0,1,2,3,4,5,6"]
+    exe : '0,1,2,3,4,5,5'
+    ts  : '0,1,2,3,4,5,6'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["2", "0,1,2,3,4,5,6"]
+    exe : '0,1,2,3,4,5,5,5'
+    ts  : '0,1,2,3,4,5,6,6'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["3", "0,1,2,3,4,5,6"]
+    exe : '0,1,2,3,4,5,5,5,5'
+    ts  : '0,1,2,3,4,5,6,6,6'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["5", "0,1,2,3,4,5,6"]
+    exe : '0,1,2,3,4,5,5,5,5,5,5'
+    ts  : '0,1,2,3,4,5,6,6,6,6,6'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["1", "0,1,2,3,4,5,6,7"]
+    exe : '0,1,2,3,4,5,6,6'
+    ts  : '0,1,2,3,4,5,6,7'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["2", "0,1,2,3,4,5,6,7"]
+    exe : '0,1,2,3,4,5,6,6,6'
+    ts  : '0,1,2,3,4,5,6,7,7'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["3", "0,1,2,3,4,5,6,7"]
+    exe : '0,1,2,3,4,5,6,6,6,6'
+    ts  : '0,1,2,3,4,5,6,7,7,7'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=cmd4 source=probe cmd=4 args=["5", "0,1,2,3,4,5,6,7"]
+    exe : '0,1,2,3,4,5,6,6,6,6,6,6'
+    ts  : '0,1,2,3,4,5,6,7,7,7,7,7'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=cmd4 source=seed cmd=4 args=["1", "1,3,2"]
+    exe : '1,3,1'
+    ts  : '1,3,2'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=cmd4 source=seed cmd=4 args=["2", "1,3,2"]
+    exe : '1,3,1,1'
+    ts  : '1,3,2,2'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=cmd4 source=seed cmd=4 args=["3", "1,3,2"]
+    exe : '1,3,1,1,1'
+    ts  : '1,3,2,2,2'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=cmd4 source=seed cmd=4 args=["5", "1,3,2"]
+    exe : '1,3,1,1,1,1,1'
+    ts  : '1,3,2,2,2,2,2'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=cmd4 source=seed cmd=4 args=["1", "2,1"]
+    exe : '2,2'
+    ts  : '2,1'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=cmd4 source=seed cmd=4 args=["2", "2,1"]
+    exe : '2,2,2'
+    ts  : '2,1,1'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=cmd4 source=seed cmd=4 args=["3", "2,1"]
+    exe : '2,2,2,2'
+    ts  : '2,1,1,1'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=cmd4 source=seed cmd=4 args=["5", "2,1"]
+    exe : '2,2,2,2,2,2'
+    ts  : '2,1,1,1,1,1'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["1", "0,1"]
+    exe : '0,0'
+    ts  : '0,1'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["2", "0,1"]
+    exe : '0,0,0'
+    ts  : '0,1,1'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["3", "0,1"]
+    exe : '0,0,0,0'
+    ts  : '0,1,1,1'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["5", "0,1"]
+    exe : '0,0,0,0,0,0'
+    ts  : '0,1,1,1,1,1'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["1", "0,1,2"]
+    exe : '0,1,1'
+    ts  : '0,1,2'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["2", "0,1,2"]
+    exe : '0,1,1,1'
+    ts  : '0,1,2,2'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["3", "0,1,2"]
+    exe : '0,1,1,1,1'
+    ts  : '0,1,2,2,2'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["5", "0,1,2"]
+    exe : '0,1,1,1,1,1,1'
+    ts  : '0,1,2,2,2,2,2'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["1", "0,1,2,3"]
+    exe : '0,1,2,2'
+    ts  : '0,1,2,3'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["2", "0,1,2,3"]
+    exe : '0,1,2,2,2'
+    ts  : '0,1,2,3,3'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["3", "0,1,2,3"]
+    exe : '0,1,2,2,2,2'
+    ts  : '0,1,2,3,3,3'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["5", "0,1,2,3"]
+    exe : '0,1,2,2,2,2,2,2'
+    ts  : '0,1,2,3,3,3,3,3'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["1", "0,1,2,3,4"]
+    exe : '0,1,2,3,3'
+    ts  : '0,1,2,3,4'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["2", "0,1,2,3,4"]
+    exe : '0,1,2,3,3,3'
+    ts  : '0,1,2,3,4,4'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["3", "0,1,2,3,4"]
+    exe : '0,1,2,3,3,3,3'
+    ts  : '0,1,2,3,4,4,4'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["5", "0,1,2,3,4"]
+    exe : '0,1,2,3,3,3,3,3,3'
+    ts  : '0,1,2,3,4,4,4,4,4'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["1", "0,1,2,3,4,5"]
+    exe : '0,1,2,3,4,4'
+    ts  : '0,1,2,3,4,5'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["2", "0,1,2,3,4,5"]
+    exe : '0,1,2,3,4,4,4'
+    ts  : '0,1,2,3,4,5,5'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["3", "0,1,2,3,4,5"]
+    exe : '0,1,2,3,4,4,4,4'
+    ts  : '0,1,2,3,4,5,5,5'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["5", "0,1,2,3,4,5"]
+    exe : '0,1,2,3,4,4,4,4,4,4'
+    ts  : '0,1,2,3,4,5,5,5,5,5'
+    note: fs(n=5)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["1", "0,1,2,3,4,5,6"]
+    exe : '0,1,2,3,4,5,5'
+    ts  : '0,1,2,3,4,5,6'
+    note: fs(n=1)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["2", "0,1,2,3,4,5,6"]
+    exe : '0,1,2,3,4,5,5,5'
+    ts  : '0,1,2,3,4,5,6,6'
+    note: fs(n=2)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["3", "0,1,2,3,4,5,6"]
+    exe : '0,1,2,3,4,5,5,5,5'
+    ts  : '0,1,2,3,4,5,6,6,6'
+    note: fs(n=3)  batch=ok/ok
+
+[pps4] tag=deep source=deep cmd=4 args=["5", "0,1,2,3,4,5,6"]
+    exe : '0,1,2,3,4,5,5,5,5,5,5'
+    ts  : '0,1,2,3,4,5,6,6,6,6,6'
+    note: fs(n=5)  batch=ok/ok

@@ -7,6 +7,17 @@
 > 结论是「复原 exe 的 ONP2 输出口径」，不是逐字对齐 Googology Wiki 定义。
 > 本次修掉的都是**不改数学定义即可修**、且**不与序数尺 / 展开树组合出问题**的部分；
 > 会改变展开结果或破坏宿主契约的偏差，一律保留并在下文写明口径。
+>
+> **配套资料**：11 份报告、基准原文与差分数据逐字归档在
+> [`reviews/`](./reviews/README.md)；PPS4 v2 的完整变更归档在
+> [`pps4-v2-changes/`](./pps4-v2-changes/README.md)；临时资料清单在
+> [`process-artifacts/`](./process-artifacts/README.md)。全部文档的总导航见
+> [`docs/README.md`](./README.md)。
+>
+> 需要用真实 exe 重跑逐条对拍时，用 [`../tools/crosscheck.py`](../tools/crosscheck.py)，
+> 用法与判读口径见 [`crosscheck.md`](./crosscheck.md)；上一轮的真实 exe 结果归档在
+> [`reviews/audit-crosscheck-summary.json`](./reviews/audit-crosscheck-summary.json) 与
+> [`reviews/audit-diff-details.txt`](./reviews/audit-diff-details.txt)。
 
 ---
 
@@ -16,7 +27,7 @@
 |---|---|---|---|
 | 1 | **两位数解析缺陷**：`y = (cellStr.length >> 1) + 1` 假定每个元素只占一位，第 2 行出现 `10,11,12` 时列数算错，二次展开越界 | `core/matrix.ts` `txma()` | 按实际元素个数 `cellStr.split(',').length` 推断。覆盖全部 `ymode=0` 记号 |
 | 2 | **零表达式 `"0"` 在 8 个 `bias=1` 序列记号里被误判为后继**（`typeOf` 返回 `2`） | `core/seq.ts` `txar()` | `"0"` 直接返回全 0 数组，不解析成单元素 `[bias]` |
-| 3 | **`fsLimit(0)` 越界**：返回的是后继表达式，不在极限基本列里；序数尺根节点因此不是极限序数（原 31 个记号里有 21 个） | `core/seq.ts` 三个 `seqLimit*`、`core/notation.ts` `limitMat()`、`lprss` / `kp_hydra` / `pss_hydra` / `stos` / `ppm00t` / `remainder_retention` | 统一 0-based：`fsLimit(a)` = 极限基本列第 `a` 项。集成测试里「根节点非极限」从 21 个降到 1 个（LELS，见 §3） |
+| 3 | **`fsLimit(0)` 越界**：返回的是后继表达式，不在极限基本列里；序数尺根节点因此不是极限序数（修正前 31 个记号、当时含 `pps4_v2`，有 21 个） | `core/seq.ts` 三个 `seqLimit*`、`core/notation.ts` `limitMat()`、`lprss` / `kp_hydra` / `pss_hydra` / `stos` / `ppm00t` / `remainder_retention` | 统一 0-based：`fsLimit(a)` = 极限基本列第 `a` 项。集成测试里「根节点非极限」从 21 个降到 1 个（LELS，见 §3） |
 | 4 | **零 / 后继表达式调用 `fs` 产出语法垃圾**：KP Hydra `"()" → ")"`、PSS Hydra 不平衡串、RCS `"0" → "-1"`、BMS 无坏根矩阵被强行复制 | `core/notation.ts` 两个基类 `fs()`，及 5 个自定义 `fs()` | `typeOf(s) !== '3'` 时短路。零返回 `"0"`，其余返回**原表达式** |
 | 5 | **`pred` 违反 ONP2 协议**：空矩阵 / `"0"` 返回 `""` 而非 `"0"` | `core/matrix.ts`、`lprss` / `kp_hydra` / `pss_hydra` | 空矩阵、单列矩阵、零表达式一律返回 `"0"` |
 | 6 | **CpS 死循环**：`fb[0] = 0` 且无输入校验，非标准输入 `0,2,4` / `2,4,8` 的 `fs` 永不返回，宿主挂死 | `coprime.ts` | `hasCommonFactor` 换标准 `gcd`（`gcd(0,b)=|b|` 语义正确）；父链加自环护栏 |
@@ -70,8 +81,8 @@ PPS4 在找不到可回落项时缺少「等同弱展开」兜底。
 **保留理由**：`ppsEx` 是 7 个记号（`pps2` / `pps3` / `pps4` / 4 个弱化版）
 共用的骨架，`prss_parented` 也走它；改动会整体改变展开输出。而 Wiki 页面给出的
 4 个长表达式（含「地府第一层」「良序极限基本列」）在 `pps2` 上 `n=0..3`
-**逐项完全一致**，说明现值在真实用例上成立。此外 `pps4_v2` 是与用户提供的
-另一版 exe 逐条对拍过的基准（见 `docs/pps4-v2.md`），不宜按 Wiki 定义重写。
+**逐项完全一致**，说明现值在真实用例上成立。此外当前的 `pps4` 已替换为与用户提供的 exe 逐条对拍过的那个版本
+（见 `docs/pps4-v2.md`），不宜按 Wiki 定义重写。
 
 ### 2.3 LELS
 
@@ -99,8 +110,10 @@ PPS4 在找不到可回落项时缺少「等同弱展开」兜底。
 - `ppm.ts` 自报 `name` 为 `Parented Predecessor Matrix 2`，实现的是 **PPM 1.2** 的
   弱/强判定；PPM 2 独有的字典序判定与 `i > y-L+1` 未实现。exe 的 `name0()` 也打印
   PPM 2，故保留名字不改，仅在此登记版本归属（`ppm3` 对应 PPM 3，`ppm00t` 在 Wiki 无定义）。
-- `pps4` / `pps4_v2` 是同一记号的**两个 exe 版本**，差异只在 `Ex()` 的降级扫描下界，
-  详见 `docs/pps4-v2.md`。用户提供的 exe 对应 `pps4_v2`。
+- **PPS4 已于 2026-11-08 替换**：与用户 exe 不符的旧复原版已删除，
+  11/7 那份实现从 `pps4_v2` 提升为唯一的 `pps4`（`name` 无后缀，注册表 31 → 30）。
+  两版差异只在 `Ex()` 的降级扫描下界，详见 `docs/pps4-v2.md` 与
+  `docs/pps4-v2-changes/`。
 - 非法表达式（不校验定义域、括号匹配、等级约束）仍被静默接受，但 §1 的短路与护栏
   保证不会产出负数 / 不平衡括号串 / 死循环。
 
@@ -108,11 +121,11 @@ PPS4 在找不到可回落项时缺少「等同弱展开」兜底。
 
 ## 3. 集成验证结果与已知限制
 
-在 31 个记号上跑 `tests/integration.mjs`（宿主 + 序数尺 + 展开树 + validate）、
+在 30 个记号上跑 `tests/integration.mjs`（宿主 + 序数尺 + 展开树 + validate）、
 `tests/verify.ts`、`tests/check_names.mjs`，以及逐记号压力脚本：
 
-- **初始化失败 0 个**；`npm run verify` 全部通过；名字表 31 个一致。
-- 序数尺：`firstExceeding('0','Limit')` 在 31 个记号上全部返回合法的**极限表达式**；
+- **初始化失败 0 个**；`npm run verify` 全部通过；名字表 30 个一致。
+- 序数尺：`firstExceeding('0','Limit')` 在 30 个记号上全部返回合法的**极限表达式**；
   连续拉近 60 次 / 拉远 120 次 / 反复横跳 40 轮、密集刻度绘制均不崩溃。
 - 展开树：初始化、点击展开、连续展开、滚动均正常。
 - `validate` 对 `fsLimit(0..3)` 产出的串全部判合法。
@@ -138,7 +151,7 @@ npm install
 npm run verify             # 宿主 / 序数尺 / 展开树逻辑自检
 npm run check-names        # 记号名字表一致性
 npm run verify:notations   # 本次修正的回归用例
-node tests/integration.mjs # 31 个记号的初始化总表（需先 esbuild 打包，见文件头）
+node tests/integration.mjs # 30 个记号的初始化总表（需先 esbuild 打包，见文件头）
 npm run build              # tsc --noEmit + vite build
 ```
 

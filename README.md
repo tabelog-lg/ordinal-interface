@@ -25,14 +25,14 @@
 | **序数尺** | 滚轮缩放，沿 0 → 1 → … → ω → ω·2 → … → ω² 一直放大 |
 | **设置** | 配色、对齐模式、密集刻度 / 连续展开、配置导入导出 |
 
-内置 **33 个**记号。前两个由原项目的 VB 示例逐行移植，后 31 个由 ONP2 exe 的
+内置 **32 个**记号。前两个由原项目的 VB 示例逐行移植，后 30 个由 ONP2 exe 的
 反编译产物复原（见 `docs/restored/`）：
 
 | 记号 | 覆盖范围 / 来源 | 表达式示例 |
 |---|---|---|
 | `Omega2 (w^2)` | ω² 以下，由 `examples/Omega2Notation/Program.vb` 逐行移植 | `0` `5` `w` `w*3` `w*3+7` `Limit`（= ω²） |
 | `OmegaOmega (w^w)` | ω^ω 以下，形如 Σ c[i]·ω^i | `w^2` `w^2*3+w*2+5` `w^3+w` `Limit`（= ω^ω） |
-| 31 个复原记号 | Bashicu 矩阵系 / Y 序列系 / PrSS 系 / PPS 系等 | `(0,0)(1,1)(2,2)` `1,2,3` `(()())` `0(1(2()))` |
+| 30 个复原记号 | Bashicu 矩阵系 / Y 序列系 / PrSS 系 / PPS 系等 | `(0,0)(1,1)(2,2)` `1,2,3` `(()())` `0(1(2()))` |
 
 表达式写法由各记号自己决定（矩阵、逗号序列、括号串、空格序列都有），
 不统一 —— 换记号时旧的表达式串一般不再适用。
@@ -111,25 +111,41 @@ src/
    ├─ misc.ts             杂项页
    ├─ settings.ts         设置页
    └─ plugins.ts          记号列表页
-└─ notations/             ★ 31 个复原记号（ONP2 插件形态）
+└─ notations/             ★ 30 个复原记号（ONP2 插件形态）
    ├─ index.ts            注册表
    ├─ core/               共通框架：seq / matrix / bms / vb
-   └─ {31 个记号}.ts
+   └─ {30 个记号}.ts
 tests/
 ├─ verify.ts              逻辑自检（不依赖 DOM）
-├─ integration.mjs        把 31 个记号塞进宿主 / 序数尺 / 展开树跑一遍
+├─ verify_notations.mjs    ★ 记号插件回归（95 条：修正项 + PPS4 替换 + 契约锁定）
+├─ integration.mjs        把 30 个记号塞进宿主 / 序数尺 / 展开树跑一遍
 ├─ integration2.mjs       查每个记号命令 1（基本列）的形态
 ├─ i3.mjs                 查给定表达式后展开是否严格递增
 └─ check_names.mjs        断言：plugins.ts 的名字表与记号实现一致
-docs/
-├─ ONP2-protocol-and-restoration.md   协议条文、复原说明
-├─ original-vb-project.md              原项目说明
-├─ README.md
-├─ pps4-v2.md             ★ PPS4 另一版本：反编译对照、输出差异、txar 修正
-├─ IMPLEMENTATION-NOTES.md ★ 实现基准、修正清单、明确不改的偏移与理由
-└─ restored/              ★ 复原产物（移植依据，不进 dist）
+tools/
+└─ crosscheck.py           ★ 对拍：TS 记号 ⇄ 26 个 ONP2 exe（说明见 docs/crosscheck.md）
+docs/                         ★ 全部文档的总导航见 docs/README.md
+├─ README.md                       文档总导航 + VB 标识符对照 + 已修 bug
+├─ CHANGELOG.md                    ★ 变更记录：每轮改了哪些文件、资料来源
+├─ ONP2-protocol-and-restoration.md 协议条文、复原说明
+├─ original-vb-project.md           原项目说明
+├─ IMPLEMENTATION-NOTES.md         ★ 实现基准、修正清单、明确不改的偏移与理由
+├─ pps4-v2.md                      PPS4 当前实现基准（原 v2，旧版已删除）
+├─ crosscheck.md                   ★ 对拍工具用法、26 exe 映射、报告判读
+├─ reviews/                        ★ 11 份实现审查报告 + 基准原文 + 差分数据
+│  ├─ README.md                     索引与「报告↔本轮修正」对应表
+│  ├─ audit-*.md                  11 份审查 / 源码对照报告
+│  ├─ audit-reference-materials.md / audit-diff-details.txt / audit-crosscheck-summary.json
+├─ pps4-v2-changes/                ★ PPS4 替换的历史归档（11/7 快照，原包全量）
+│  ├─ README.md / STATUS.md（当前状态）/ 01-reversed-diff.md / 02-behavior-diff.txt
+│  ├─ 03-txar-fix.md / 04-file-manifest.md / diagnostics-*.txt
+│  └─ scripts/、changed-files/
+├─ process-artifacts/              ★ 过程性资料总索引（4 份原件 + 清单）
+│  ├─ README.md / temp-files.md / diagnostics-rebuilt.md
+│  └─ pps4-v2-temp.md / workspace-extras.md
+└─ restored/                        ★ 复原产物（移植依据，不进 dist）
    ├─ README.md
-   ├─ cpp/                31 个记号的 C++ 复原版（make 可构建）
+   ├─ cpp/                30 个记号的 C++ 复原版（make 可构建）
    ├─ csharp/             第二批 3 个记号的 VB.NET/C# 复原版
    ├─ lels-original-source/  LELS 原始 C++ 源码
    └─ vb/                 还原出的完整 VB.NET 工程
@@ -179,7 +195,7 @@ export default {
 UI、列表渲染、默认选中逻辑都是通用的，不用再改别处。
 
 > `name` 是后来加的字段。原先启动时为了拿名字要把每个内置记号都 `import` 一遍，
-> 2 个时无所谓，33 个时等于把懒加载设计废掉（首屏拉下全部记号代码）。
+> 2 个时无所谓，32 个时等于把懒加载设计废掉（首屏拉下全部记号代码）。
 > 改成表里写死名字后启动零 import —— 代价是名字要维护两份，
 > `tests/check_names.mjs` 有断言兜底。
 
@@ -297,18 +313,39 @@ UI、列表渲染、默认选中逻辑都是通用的，不用再改别处。
 
 ---
 
-## 十、移植依据文档
+## 十、文档导航
 
-这次移植所依据的原始资料收录在 [`docs/`](./docs/README.md) 下（**均为 ASCII 文件名**，便于引用）：
+全部文档收在 [`docs/`](./docs/README.md) 下，**总导航与分组说明见 [`docs/README.md`](./docs/README.md)**。
+按用途分七组：
+
+| 组 | 内容 | 入口 |
+|---|---|---|
+| 实现基准与审查 | 11 份实现审查报告、基准原文逐字汇编、差分明细、26 记号 exe↔TS 对拍汇总 | [`docs/reviews/README.md`](./docs/reviews/README.md) |
+| 本轮修正口径 | 改了什么、明确没改什么及理由、已知限制、复现命令 | [`docs/IMPLEMENTATION-NOTES.md`](./docs/IMPLEMENTATION-NOTES.md) |
+| 变更归档 | PPS4 两版对照与替换的历史归档（当前实现见 [`pps4-v2.md`](./docs/pps4-v2.md)） | [`docs/pps4-v2-changes/README.md`](./docs/pps4-v2-changes/README.md) |
+| 过程性资料 | 三个临时文件包的清单、反编译切片索引、已删除且无法恢复的文件 | [`docs/process-artifacts/README.md`](./docs/process-artifacts/README.md) |
+| 移植依据 | 协议条文、原项目说明、VB 标识符对照、可编译的 C++/C#/VB 复原源码 | [`docs/ONP2-protocol-and-restoration.md`](./docs/ONP2-protocol-and-restoration.md)、[`docs/restored/README.md`](./docs/restored/README.md) |
+| 对拍工具 | 26 个 exe ⇄ TS 记号逐条对拍、映射表、EOF 后不退出的进程模型、报告判读 | [`docs/crosscheck.md`](./docs/crosscheck.md) |
+| 变更记录 | 每轮改了哪些文件、资料来源、哪些过程产物未纳入 | [`docs/CHANGELOG.md`](./docs/CHANGELOG.md) |
+
+> **文件名约定**：仓库内所有文件名一律 ASCII（含交付 zip 条目）。
+> 例外只有外部数据：`tools/crosscheck.py` 里 `EXE_MAP` 的值是你提供的 26 个原始
+> exe 名（含中文/希腊字母），脚本按原名查找；审查报告与基准原文里记录的历史资料名同理。
+> 原名 → 现名对照见 [`tools/README.md`](./tools/README.md)。
+
+移植依据的两份主文档（**ASCII 文件名**，便于引用）：
 
 - [`docs/ONP2-protocol-and-restoration.md`](./docs/ONP2-protocol-and-restoration.md) —— ONP2 协议官方条文与逆向核对表、
   混淆名 → 还原名对照、核心算法说明、配置文件字节级格式、插件编写清单
 - [`docs/original-vb-project.md`](./docs/original-vb-project.md) —— 原桌面程序的 README（目录结构、编译方法、已知问题）
 
 **VB 标识符 ↔ TypeScript 模块的对应关系表**见 [`docs/README.md`](./docs/README.md)。
+还原出的原 VB 源码（`.vb` 工程）已收入 [`docs/restored/vb/`](./docs/restored/vb/)，保留原目录结构，
+`.vbproj` 不用改就能直接构建。
 
-原 VB 源码（`.vb` 工程）**未收入本仓库**——网页版已是完整的 TypeScript 重写，
-需要逐行对照时请回到原还原项目。
+> 2026-11-07 新增的审查文稿与修正文档记录的是**判定依据与取舍**，不是运行时依赖。
+> 想知道「代码现在为什么是这样」，先读 `IMPLEMENTATION-NOTES.md`，再按
+> `reviews/README.md` 查对应记号的报告；报告本身写的是修正前的状态。
 
 ## 十一、致谢与来源
 
@@ -316,3 +353,5 @@ UI、列表渲染、默认选中逻辑都是通用的，不用再改别处。
 - 移植依据：反编译产物 `Form1.cs` 还原出的 `OrdinalInterface.vb` / `OrdinalInterface.Designer.vb`
 - 协议：[`docs/ONP2-protocol-and-restoration.md`](./docs/ONP2-protocol-and-restoration.md) 所载官方条文
 - 内置记号：原项目的 `examples/Omega2Notation/Program.vb`（已移植为 `src/engine/omega2.ts`）
+- 30 个复原记号：用户提供的 exe 反编译产物、作者提供的 `LELS.cpp` 与
+  `Parented BMS.cpp`；逐条对拍与审查记录见 [`docs/reviews/`](./docs/reviews/README.md)

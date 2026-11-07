@@ -1,5 +1,5 @@
 /**
- * 31 个 ONP2 记号的注册表。
+ * 30 个 ONP2 记号的注册表。
  *
  * 每个记号都实现 src/types.ts 里的 ONP2Plugin 接口（五个纯函数），
  * 可以直接交给序数界面网页版的宿主（EngineHost）加载。
@@ -29,7 +29,6 @@ import { pps4ExtremelyWeak } from './pps4_extremely_weak';
 import { pps4Second } from './pps4_second';
 import { pps4Third } from './pps4_third';
 import { pps4Weak } from './pps4_weak';
-import { pps4V2 } from './pps4_v2';
 import { prssParented } from './prss_parented';
 import { pssHydra } from './pss_hydra';
 import { remainderRetention } from './remainder_retention';
@@ -63,7 +62,6 @@ export const NOTATIONS: Record<string, ONP2Plugin> = {
   pps4_second: pps4Second,
   pps4_third: pps4Third,
   pps4_weak: pps4Weak,
-  pps4_v2: pps4V2,
   prss_parented: prssParented,
   pss_hydra: pssHydra,
   remainder_retention: remainderRetention,

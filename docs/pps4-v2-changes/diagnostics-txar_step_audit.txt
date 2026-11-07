@@ -1,0 +1,27 @@
+0..1999 中分叉的值: [9, 99, 999]  共 3 个
+规律：全是 10^k - 1 -> True
+
+  v     原程序   旧复原版   bias=0（两式一致）
+     0     2         2         2
+     1     2         2         2
+     8     2         2         2
+     9     2         3         2   <- 分叉
+    10     3         3         3
+    98     3         3         3
+    99     3         4         3   <- 分叉
+   100     4         4         4
+   998     4         4         4
+   999     4         5         4   <- 分叉
+  1000     5         5         5
+
+受影响的 bias=1 记号（共 10 个）:
+   mfss
+   pps2
+   pps3
+   pps4
+   pps4_weak
+   pps4_second
+   pps4_third
+   pps4_extremely_weak
+   prss_parented
+   pps4_v2

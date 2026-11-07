@@ -1,0 +1,784 @@
+{
+  "repo": "H:\\duipai",
+  "exe_dir": "H:\\duipai",
+  "seed": 20261107,
+  "options": {
+    "limit_n": 8,
+    "fs_ns": [
+      0,
+      1,
+      2,
+      3,
+      5
+    ],
+    "pairs": 40,
+    "deep": true,
+    "chunk": 48,
+    "timeout": 15,
+    "crlf": false,
+    "mutate": true
+  },
+  "notations": {
+    "zero_y": {
+      "exe": "0-Y.exe",
+      "corpus_size": 14,
+      "total": 238,
+      "ok": 238,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 0,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 13,
+        "cmd3:ok": 13,
+        "cmd4:ok": 65,
+        "cmd5:ok": 53,
+        "mut:ok": 22,
+        "deep:ok": 64
+      },
+      "by_source": {
+        "probe:ok": 92,
+        "seed:ok": 60,
+        "mut:ok": 22,
+        "deep:ok": 64
+      }
+    },
+    "zero_y_super_non_lifting": {
+      "exe": "0-Y超无提升.exe",
+      "corpus_size": 14,
+      "total": 238,
+      "ok": 230,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 8,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 13,
+        "cmd3:ok": 13,
+        "cmd4:ok": 57,
+        "cmd4:exe_only_bad": 8,
+        "cmd5:ok": 53,
+        "mut:ok": 22,
+        "deep:ok": 64
+      },
+      "by_source": {
+        "probe:ok": 88,
+        "seed:ok": 56,
+        "probe:exe_only_bad": 4,
+        "seed:exe_only_bad": 4,
+        "mut:ok": 22,
+        "deep:ok": 64
+      }
+    },
+    "bashicu_matrix": {
+      "exe": "Bashicu Matrix.exe",
+      "corpus_size": 12,
+      "total": 214,
+      "ok": 173,
+      "mismatch": 32,
+      "ts_only_bad": 0,
+      "exe_only_bad": 9,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 10,
+        "cmd3:ok": 10,
+        "cmd4:ok": 50,
+        "cmd5:ok": 50,
+        "mut:ok": 13,
+        "mut:exe_only_bad": 9,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      },
+      "by_source": {
+        "probe:ok": 109,
+        "seed:ok": 19,
+        "mut:ok": 13,
+        "mut:exe_only_bad": 9,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      }
+    },
+    "bm41": {
+      "exe": "BM4.1.exe",
+      "corpus_size": 12,
+      "total": 214,
+      "ok": 169,
+      "mismatch": 33,
+      "ts_only_bad": 0,
+      "exe_only_bad": 12,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 10,
+        "cmd3:ok": 10,
+        "cmd4:ok": 50,
+        "cmd5:ok": 50,
+        "mut:ok": 9,
+        "mut:exe_only_bad": 12,
+        "mut:mismatch": 1,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      },
+      "by_source": {
+        "probe:ok": 101,
+        "seed:ok": 27,
+        "mut:ok": 9,
+        "mut:exe_only_bad": 12,
+        "mut:mismatch": 1,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      }
+    },
+    "bms_stronf": {
+      "exe": "BMS Stronf.exe",
+      "corpus_size": 12,
+      "total": 214,
+      "ok": 173,
+      "mismatch": 32,
+      "ts_only_bad": 0,
+      "exe_only_bad": 9,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 10,
+        "cmd3:ok": 10,
+        "cmd4:ok": 50,
+        "cmd5:ok": 50,
+        "mut:ok": 13,
+        "mut:exe_only_bad": 9,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      },
+      "by_source": {
+        "probe:ok": 104,
+        "seed:ok": 24,
+        "mut:ok": 13,
+        "mut:exe_only_bad": 9,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      }
+    },
+    "bms_upgradissimo": {
+      "exe": "BMS Upgradissimo.exe",
+      "corpus_size": 12,
+      "total": 214,
+      "ok": 173,
+      "mismatch": 32,
+      "ts_only_bad": 0,
+      "exe_only_bad": 9,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 10,
+        "cmd3:ok": 10,
+        "cmd4:ok": 50,
+        "cmd5:ok": 50,
+        "mut:ok": 13,
+        "mut:exe_only_bad": 9,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      },
+      "by_source": {
+        "probe:ok": 107,
+        "seed:ok": 21,
+        "mut:ok": 13,
+        "mut:exe_only_bad": 9,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      }
+    },
+    "bms_row_extend": {
+      "exe": "BMS行延伸无ceiling.exe",
+      "corpus_size": 13,
+      "total": 230,
+      "ok": 187,
+      "mismatch": 32,
+      "ts_only_bad": 0,
+      "exe_only_bad": 11,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 12,
+        "cmd3:ok": 12,
+        "cmd4:ok": 60,
+        "cmd5:ok": 52,
+        "mut:exe_only_bad": 11,
+        "mut:ok": 11,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      },
+      "by_source": {
+        "probe:ok": 100,
+        "seed:ok": 44,
+        "mut:exe_only_bad": 11,
+        "mut:ok": 11,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      }
+    },
+    "coprime": {
+      "exe": "Coprime Sequence.exe",
+      "corpus_size": 14,
+      "total": 238,
+      "ok": 238,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 0,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 13,
+        "cmd3:ok": 13,
+        "cmd4:ok": 65,
+        "cmd5:ok": 53,
+        "mut:ok": 22,
+        "deep:ok": 64
+      },
+      "by_source": {
+        "probe:ok": 98,
+        "seed:ok": 54,
+        "mut:ok": 22,
+        "deep:ok": 64
+      }
+    },
+    "hiun": {
+      "exe": "HIUN.exe",
+      "corpus_size": 14,
+      "total": 222,
+      "ok": 213,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 0,
+      "both_bad": 9,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 11,
+        "cmd3:ok": 11,
+        "cmd4:ok": 51,
+        "cmd4:both_bad": 4,
+        "cmd5:ok": 51,
+        "mut:ok": 21,
+        "mut:both_bad": 1,
+        "deep:ok": 60,
+        "deep:both_bad": 4
+      },
+      "by_source": {
+        "probe:ok": 102,
+        "seed:ok": 30,
+        "seed:both_bad": 4,
+        "mut:ok": 21,
+        "mut:both_bad": 1,
+        "deep:ok": 60,
+        "deep:both_bad": 4
+      }
+    },
+    "kp_hydra": {
+      "exe": "KP hydra.exe",
+      "corpus_size": 13,
+      "total": 140,
+      "ok": 126,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 14,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 9,
+        "cmd3:ok": 8,
+        "cmd3:exe_only_bad": 1,
+        "cmd4:exe_only_bad": 10,
+        "cmd4:ok": 35,
+        "cmd5:ok": 49,
+        "mut:ok": 17,
+        "mut:exe_only_bad": 3
+      },
+      "by_source": {
+        "probe:ok": 105,
+        "seed:ok": 4,
+        "seed:exe_only_bad": 6,
+        "probe:exe_only_bad": 5,
+        "mut:ok": 17,
+        "mut:exe_only_bad": 3
+      }
+    },
+    "lels": {
+      "exe": "LELS(ω进制阵).exe",
+      "corpus_size": 14,
+      "total": 222,
+      "ok": 166,
+      "mismatch": 5,
+      "ts_only_bad": 36,
+      "exe_only_bad": 14,
+      "both_bad": 1,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 11,
+        "cmd3:ok": 11,
+        "cmd4:ok": 51,
+        "cmd4:ts_only_bad": 4,
+        "cmd5:ok": 46,
+        "cmd5:mismatch": 5,
+        "mut:ok": 7,
+        "mut:exe_only_bad": 14,
+        "mut:both_bad": 1,
+        "deep:ok": 32,
+        "deep:ts_only_bad": 32
+      },
+      "by_source": {
+        "probe:ok": 90,
+        "seed:ok": 37,
+        "probe:ts_only_bad": 4,
+        "probe:mismatch": 5,
+        "mut:ok": 7,
+        "mut:exe_only_bad": 14,
+        "mut:both_bad": 1,
+        "deep:ok": 32,
+        "deep:ts_only_bad": 32
+      }
+    },
+    "lprss": {
+      "exe": "LPrSS.exe",
+      "corpus_size": 13,
+      "total": 166,
+      "ok": 146,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 20,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 12,
+        "cmd3:ok": 11,
+        "cmd3:exe_only_bad": 1,
+        "cmd4:exe_only_bad": 15,
+        "cmd4:ok": 45,
+        "cmd5:ok": 52,
+        "mut:ok": 18,
+        "mut:exe_only_bad": 4
+      },
+      "by_source": {
+        "probe:ok": 96,
+        "seed:ok": 32,
+        "seed:exe_only_bad": 11,
+        "probe:exe_only_bad": 5,
+        "mut:ok": 18,
+        "mut:exe_only_bad": 4
+      }
+    },
+    "mfss": {
+      "exe": "Multiple Father Sequence System.exe",
+      "corpus_size": 11,
+      "total": 184,
+      "ok": 184,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 0,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 7,
+        "cmd3:ok": 7,
+        "cmd4:ok": 35,
+        "cmd5:ok": 47,
+        "mut:ok": 16,
+        "deep:ok": 64
+      },
+      "by_source": {
+        "probe:ok": 104,
+        "mut:ok": 16,
+        "deep:ok": 64
+      }
+    },
+    "parented_bms": {
+      "exe": "Parented BMS.exe",
+      "corpus_size": 12,
+      "total": 214,
+      "ok": 169,
+      "mismatch": 36,
+      "ts_only_bad": 0,
+      "exe_only_bad": 9,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 10,
+        "cmd3:ok": 10,
+        "cmd4:ok": 46,
+        "cmd4:mismatch": 4,
+        "cmd5:ok": 50,
+        "mut:ok": 13,
+        "mut:exe_only_bad": 9,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      },
+      "by_source": {
+        "probe:ok": 94,
+        "seed:ok": 30,
+        "probe:mismatch": 4,
+        "mut:ok": 13,
+        "mut:exe_only_bad": 9,
+        "deep:ok": 32,
+        "deep:mismatch": 32
+      }
+    },
+    "ppm00t": {
+      "exe": "Parented Predecessor Matrix 00T.exe",
+      "corpus_size": 12,
+      "total": 230,
+      "ok": 196,
+      "mismatch": 9,
+      "ts_only_bad": 0,
+      "exe_only_bad": 25,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 12,
+        "cmd3:ok": 12,
+        "cmd4:ok": 52,
+        "cmd4:exe_only_bad": 4,
+        "cmd4:mismatch": 4,
+        "cmd5:ok": 52,
+        "mut:ok": 8,
+        "mut:exe_only_bad": 13,
+        "mut:mismatch": 1,
+        "deep:ok": 52,
+        "deep:exe_only_bad": 8,
+        "deep:mismatch": 4
+      },
+      "by_source": {
+        "probe:ok": 93,
+        "seed:ok": 43,
+        "probe:exe_only_bad": 4,
+        "probe:mismatch": 4,
+        "mut:ok": 8,
+        "mut:exe_only_bad": 13,
+        "mut:mismatch": 1,
+        "deep:ok": 52,
+        "deep:exe_only_bad": 8,
+        "deep:mismatch": 4
+      }
+    },
+    "ppm3": {
+      "exe": "Parented Predecessor Matrix 3.exe",
+      "corpus_size": 12,
+      "total": 214,
+      "ok": 164,
+      "mismatch": 5,
+      "ts_only_bad": 0,
+      "exe_only_bad": 45,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 10,
+        "cmd3:ok": 10,
+        "cmd4:ok": 46,
+        "cmd4:mismatch": 4,
+        "cmd5:ok": 50,
+        "mut:ok": 8,
+        "mut:exe_only_bad": 13,
+        "mut:mismatch": 1,
+        "deep:ok": 32,
+        "deep:exe_only_bad": 32
+      },
+      "by_source": {
+        "probe:ok": 98,
+        "seed:ok": 26,
+        "probe:mismatch": 4,
+        "mut:ok": 8,
+        "mut:exe_only_bad": 13,
+        "mut:mismatch": 1,
+        "deep:ok": 32,
+        "deep:exe_only_bad": 32
+      }
+    },
+    "ppm": {
+      "exe": "Parented Predecessor Matrix.exe",
+      "corpus_size": 12,
+      "total": 214,
+      "ok": 162,
+      "mismatch": 4,
+      "ts_only_bad": 0,
+      "exe_only_bad": 48,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 10,
+        "cmd3:ok": 10,
+        "cmd4:ok": 46,
+        "cmd4:mismatch": 4,
+        "cmd5:ok": 50,
+        "mut:ok": 6,
+        "mut:exe_only_bad": 16,
+        "deep:ok": 32,
+        "deep:exe_only_bad": 32
+      },
+      "by_source": {
+        "probe:ok": 99,
+        "seed:ok": 25,
+        "probe:mismatch": 4,
+        "mut:ok": 6,
+        "mut:exe_only_bad": 16,
+        "deep:ok": 32,
+        "deep:exe_only_bad": 32
+      }
+    },
+    "pps3": {
+      "exe": "Parented Predecessor Sequence 3.exe",
+      "corpus_size": 14,
+      "total": 238,
+      "ok": 238,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 0,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 13,
+        "cmd3:ok": 13,
+        "cmd4:ok": 65,
+        "cmd5:ok": 53,
+        "mut:ok": 22,
+        "deep:ok": 64
+      },
+      "by_source": {
+        "probe:ok": 96,
+        "seed:ok": 56,
+        "mut:ok": 22,
+        "deep:ok": 64
+      }
+    },
+    "pps4": {
+      "exe": "Parented Predecessor Sequence 4.exe",
+      "corpus_size": 14,
+      "total": 238,
+      "ok": 178,
+      "mismatch": 60,
+      "ts_only_bad": 0,
+      "exe_only_bad": 0,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 13,
+        "cmd3:ok": 13,
+        "cmd4:ok": 29,
+        "cmd4:mismatch": 36,
+        "cmd5:ok": 53,
+        "mut:ok": 22,
+        "deep:ok": 40,
+        "deep:mismatch": 24
+      },
+      "by_source": {
+        "probe:ok": 64,
+        "seed:ok": 52,
+        "probe:mismatch": 28,
+        "seed:mismatch": 8,
+        "mut:ok": 22,
+        "deep:ok": 40,
+        "deep:mismatch": 24
+      }
+    },
+    "pps2": {
+      "exe": "Parented Predecessor Sequence.exe",
+      "corpus_size": 14,
+      "total": 238,
+      "ok": 238,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 0,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 13,
+        "cmd3:ok": 13,
+        "cmd4:ok": 65,
+        "cmd5:ok": 53,
+        "mut:ok": 22,
+        "deep:ok": 64
+      },
+      "by_source": {
+        "probe:ok": 94,
+        "seed:ok": 58,
+        "mut:ok": 22,
+        "deep:ok": 64
+      }
+    },
+    "prss_parented": {
+      "exe": "Parented PrSS.exe",
+      "corpus_size": 14,
+      "total": 238,
+      "ok": 238,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 0,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 13,
+        "cmd3:ok": 13,
+        "cmd4:ok": 65,
+        "cmd5:ok": 53,
+        "mut:ok": 22,
+        "deep:ok": 64
+      },
+      "by_source": {
+        "probe:ok": 95,
+        "seed:ok": 57,
+        "mut:ok": 22,
+        "deep:ok": 64
+      }
+    },
+    "pss_hydra": {
+      "exe": "PSS hydra.exe",
+      "corpus_size": 13,
+      "total": 140,
+      "ok": 126,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 14,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 9,
+        "cmd3:ok": 8,
+        "cmd3:exe_only_bad": 1,
+        "cmd4:exe_only_bad": 10,
+        "cmd4:ok": 35,
+        "cmd5:ok": 49,
+        "mut:ok": 17,
+        "mut:exe_only_bad": 3
+      },
+      "by_source": {
+        "probe:ok": 100,
+        "seed:ok": 9,
+        "seed:exe_only_bad": 6,
+        "probe:exe_only_bad": 5,
+        "mut:ok": 17,
+        "mut:exe_only_bad": 3
+      }
+    },
+    "remainder_retention": {
+      "exe": "Remainder Retention Sequence System.exe",
+      "corpus_size": 14,
+      "total": 230,
+      "ok": 187,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 43,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 12,
+        "cmd3:ok": 12,
+        "cmd4:ok": 46,
+        "cmd4:exe_only_bad": 14,
+        "cmd5:ok": 52,
+        "mut:ok": 22,
+        "deep:ok": 35,
+        "deep:exe_only_bad": 29
+      },
+      "by_source": {
+        "probe:ok": 101,
+        "seed:ok": 29,
+        "probe:exe_only_bad": 4,
+        "seed:exe_only_bad": 10,
+        "mut:ok": 22,
+        "deep:ok": 35,
+        "deep:exe_only_bad": 29
+      }
+    },
+    "residue_class": {
+      "exe": "Residue Class Sequence.exe",
+      "corpus_size": 14,
+      "total": 238,
+      "ok": 233,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 5,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 13,
+        "cmd3:ok": 13,
+        "cmd4:ok": 61,
+        "cmd4:exe_only_bad": 4,
+        "cmd5:ok": 53,
+        "mut:ok": 21,
+        "mut:exe_only_bad": 1,
+        "deep:ok": 64
+      },
+      "by_source": {
+        "probe:ok": 95,
+        "seed:ok": 53,
+        "seed:exe_only_bad": 4,
+        "mut:ok": 21,
+        "mut:exe_only_bad": 1,
+        "deep:ok": 64
+      }
+    },
+    "simplified_minus2y": {
+      "exe": "Simplified -2-Y.exe",
+      "corpus_size": 14,
+      "total": 238,
+      "ok": 238,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 0,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 13,
+        "cmd3:ok": 13,
+        "cmd4:ok": 65,
+        "cmd5:ok": 53,
+        "mut:ok": 22,
+        "deep:ok": 64
+      },
+      "by_source": {
+        "probe:ok": 98,
+        "seed:ok": 54,
+        "mut:ok": 22,
+        "deep:ok": 64
+      }
+    },
+    "stos": {
+      "exe": "STOS.exe",
+      "corpus_size": 14,
+      "total": 222,
+      "ok": 222,
+      "mismatch": 0,
+      "ts_only_bad": 0,
+      "exe_only_bad": 0,
+      "both_bad": 0,
+      "by_tag": {
+        "cmd1:ok": 8,
+        "cmd2:ok": 11,
+        "cmd3:ok": 11,
+        "cmd4:ok": 55,
+        "cmd5:ok": 51,
+        "mut:ok": 22,
+        "deep:ok": 64
+      },
+      "by_source": {
+        "probe:ok": 98,
+        "seed:ok": 38,
+        "mut:ok": 22,
+        "deep:ok": 64
+      }
+    }
+  },
+  "name_mismatch": [
+    {
+      "id": "ppm3",
+      "exe": [
+        "Ordinal Notation Protocol 2",
+        "Parented Predecessor Matrix 2"
+      ],
+      "ts": [
+        "Ordinal Notation Protocol 2",
+        "Parented Predecessor Matrix 3"
+      ]
+    }
+  ]
+}

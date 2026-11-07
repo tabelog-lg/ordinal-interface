@@ -189,13 +189,15 @@ export function max2(a: number, b: number): number {
 export const DecMode = {
   /** PPS2 / PPS3：a[x-1] -= 1 */
   DEC_MINUS1: 0,
-  /** PPS4：向下扫到 a[c] <= a[p] */
-  DEC_SCAN_LE: 1,
+  // 数值 1 曾是旧版 PPS4 的 DEC_SCAN_LE（扫描下界 a[p]-1、回退写在循环体内）。
+  // 该复原版与用户提供的 exe 在命令 4 上不符，2026-11-08 随记号一起删除，
+  // 数值 1 不再使用；保留空号以便与 docs/pps4-v2-changes/ 的对照表对齐。
   /** weak / third：向下扫到 a[c] == a[p] */
   DEC_SCAN_EQ: 2,
   /** second / extremely weak：同上，且遇更小值直接跳到边界 */
   DEC_SCAN_EQ_SKIP: 3,
-  /** PPS4 另一版本：条件同 DEC_SCAN_LE，但降级扫描向左一直到下标 0 */
+  /** PPS4（当前唯一版本）：条件为 a[c] <= a[p]，降级扫描向左一直到下标 0，
+   *  且「扫完没命中就回退父值」移到循环外。见 docs/pps4-v2.md。 */
   DEC_SCAN_LE_WIDE: 4,
 } as const;
 export type DecMode = (typeof DecMode)[keyof typeof DecMode];
@@ -214,11 +216,11 @@ export function ppsEx(a: number[], n: number, x: number, decMode: DecMode, liftM
     if (decMode === DecMode.DEC_MINUS1) {
       a[x - 1] = g(x - 1) - 1;
     } else if (decMode === DecMode.DEC_SCAN_LE_WIDE) {
-      // ★ 另一版 PPS4：下界从 g(p)-1 放宽到 0，且"扫完没命中就回退父值"
+      // ★ 当前 PPS4：下界从 g(p)-1 放宽到 0，且"扫完没命中就回退父值"
       //   移到循环外（c < 0）。反编译产物里对应
       //     for(local_c = a[x-1]-3; -1 < local_c; local_c--)
       //   与 if(local_c == -1) a[x-1] = a[iVar2];
-      //   进入本分支时 a[x-1] 仍是原值 v、p = v-2，故新版的 a[a[x-1]-2]
+      //   进入本分支时 a[x-1] 仍是原值 v、p = v-2，故 a[a[x-1]-2]
       //   与旧版的 a[iVar2] 是同一个元素。
       let c = g(x - 1) - 3;
       for (; c >= 0; c--) {
@@ -229,8 +231,10 @@ export function ppsEx(a: number[], n: number, x: number, decMode: DecMode, liftM
       }
       if (c < 0) a[x - 1] = g(p);
     } else {
+      // 余下只有 DEC_SCAN_EQ / DEC_SCAN_EQ_SKIP（四个 PPS4 弱化变体），
+      // 命中条件恒为 a[c] == a[p]。
       for (let c = g(x - 1) - 3; g(p) - 1 <= c; c--) {
-        const hit = decMode === DecMode.DEC_SCAN_LE ? g(c) <= g(p) : g(c) === g(p);
+        const hit = g(c) === g(p);
         if (hit) {
           a[x - 1] = c + 2;
           break;

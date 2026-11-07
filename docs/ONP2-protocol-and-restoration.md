@@ -1,7 +1,7 @@
 # ONP2 协议与还原说明
 
 > **关于本文档**
-> 来自序数界面1 v1.5.4 的 VB.NET 还原项目，原文件名为 `ONP2协议与还原说明.md`。
+> 来自序数界面1 v1.5.4 的 VB.NET 还原项目，原文件名为中文，入库时统一为 ASCII：`ONP2-protocol-and-restoration.md`（即本文件）。
 > 收入本仓库时文件名改为纯 ASCII，便于在 GitHub Pages 与各类工具链中引用；**内容未作改动**。
 > 本仓库（网页前端版）的主说明见根目录的 [README.md](../README.md) / [README_EN.md](../README_EN.md)。
 

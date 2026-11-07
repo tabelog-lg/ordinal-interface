@@ -269,11 +269,14 @@ inline void matrixPrecursor(const char *s, int m[ROWMAX][C], int ymode, int dy =
 //    (b) 提升点是否再抬一档    -> liftMode
 // ===========================================================================
 enum DecMode {
-    DEC_MINUS1 = 0,   // PPS2 / PPS3：a[x-1] -= 1
-    DEC_SCAN_LE,      // PPS4        ：向下扫到 a[c] <= a[p]
-    DEC_SCAN_EQ,      // weak / third：向下扫到 a[c] == a[p]
-    DEC_SCAN_EQ_SKIP, // second / extremely weak：同上，且遇更小值直接跳到边界
-    DEC_SCAN_LE_WIDE  // PPS4 v2（另一版本）：条件同 DEC_SCAN_LE，但向左扫到下标 0
+    DEC_MINUS1 = 0,      // PPS2 / PPS3：a[x-1] -= 1
+    // 数值 1 曾是旧版 PPS4 的 DEC_SCAN_LE（下界 a[p]-1、回退在循环体内）。
+    // 该复原版与用户提供的 exe 在命令 4 上不符，2026-11-08 随记号一起删除；
+    // 保留空号以便与 docs/pps4-v2-changes/ 的对照表对齐。
+    DEC_SCAN_EQ = 2,     // weak / third：向下扫到 a[c] == a[p]
+    DEC_SCAN_EQ_SKIP = 3,// second / extremely weak：同上，且遇更小值跳到边界
+    DEC_SCAN_LE_WIDE = 4 // PPS4（当前唯一版本）：a[c] <= a[p] 且向左扫到下标 0，
+                         // 「没命中回退父值」移到循环外。见 docs/pps4-v2.md
 };
 
 inline void ppsEx(int *a, int n, DecMode decMode, bool liftMode) {
@@ -292,12 +295,12 @@ inline void ppsEx(int *a, int n, DecMode decMode, bool liftMode) {
             a[x - 1] -= 1;
             break;
         case DEC_SCAN_LE_WIDE: {
-            // ★ 另一版 PPS4：把降级扫描的下界从 a[p]-1 放宽到 0，
+            // ★ 当前 PPS4：把降级扫描的下界从 a[p]-1 放宽到 0，
             //   且"扫完没命中就回退父值"的判断移到循环外（c < 0）。
             //   反编译产物里对应 for(local_c = a[x-1]-3; -1 < local_c; local_c--)
             //   与 if(local_c == -1) a[x-1] = a[iVar2];
             //   进入本分支时 a[x-1] 仍是原值 v、p = v-2，故
-            //   a[a[x-1]-2]（新版写法）与 a[iVar2]（旧版写法）是同一个元素。
+            //   a[a[x-1]-2]（本版写法）与 a[iVar2]（旧版写法）是同一个元素。
             int c = a[x - 1] - 3;
             for (; c >= 0; c--) {
                 if (a[c] <= a[p]) { a[x - 1] = c + 2; break; }
@@ -305,9 +308,9 @@ inline void ppsEx(int *a, int n, DecMode decMode, bool liftMode) {
             if (c < 0) a[x - 1] = a[p];
             break;
         }
-        default:
+        default:  // DEC_SCAN_EQ / DEC_SCAN_EQ_SKIP（四个 PPS4 弱化变体）
             for (int c = a[x - 1] - 3; a[p] - 1 <= c; c--) {
-                bool hit = (decMode == DEC_SCAN_LE) ? (a[c] <= a[p]) : (a[c] == a[p]);
+                bool hit = (a[c] == a[p]);
                 if (hit) { a[x - 1] = c + 2; break; }
                 if (decMode == DEC_SCAN_EQ_SKIP && a[c] < a[p]) c = a[p] - 1;
                 if (c == a[p] - 1) a[x - 1] = a[p];

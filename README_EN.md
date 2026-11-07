@@ -107,8 +107,22 @@ src/
    ├─ misc.ts             Misc tab
    ├─ settings.ts         Settings tab
    └─ plugins.ts          Notation tab
-tests/verify.ts            logic self-test (no DOM required)
-docs/                      source material: protocol text, original project README, identifier map
+tests/
+├─ verify.ts               logic self-test (no DOM required)
+├─ verify_notations.mjs    notation regression suite (95 assertions: fixes + PPS4 + contract locks)
+└─ integration.mjs / integration2.mjs / i3.mjs / check_names.mjs
+tools/
+└─ crosscheck.py           exe-to-TS cross-check (docs/crosscheck.md)
+docs/                      full documentation index: docs/README.md
+├─ README.md                       documentation navigation + VB identifier map
+├─ CHANGELOG.md                    change log: files touched per round, provenance, exclusions
+├─ ONP2-protocol-and-restoration.md / original-vb-project.md
+├─ IMPLEMENTATION-NOTES.md        implementation baseline, 2026-11-07/08 fixes, deliberate deviations
+├─ crosscheck.md                   cross-check tool: usage, exe map, report reading
+├─ reviews/                        11 implementation audit reports + verbatim reference material
+├─ pps4-v2-changes/               historical archive of the PPS4 replacement (current: pps4-v2.md)
+├─ process-artifacts/             index of workspace temp archives and lost scratch files
+└─ restored/                       compilable C++ / C# / VB restorations (not shipped to dist)
 public/plugins/            plug-in template
 ```
 
@@ -292,17 +306,43 @@ notations cannot bleed into each other.
 
 ---
 
-## 10. Source material
+## 10. Documentation
 
-The documents this port was based on live in [`docs/`](./docs/README.md) (**in Chinese**):
+All documents live in [`docs/`](./docs/README.md) (**in Chinese**); `docs/README.md` is the
+navigation hub, grouped by purpose:
+
+| Group | Contents | Entry |
+|---|---|---|
+| Implementation baseline & audits | 11 audit reports, verbatim reference definitions, diff dumps, exe↔TS cross-check summary | [`docs/reviews/README.md`](./docs/reviews/README.md) |
+| Fix rationale | what was fixed on 2026-11-07, what was deliberately kept and why, known limits | [`docs/IMPLEMENTATION-NOTES.md`](./docs/IMPLEMENTATION-NOTES.md) |
+| Change archive | historical diff of the two PPS4 versions (current implementation: [`pps4-v2.md`](./docs/pps4-v2.md)) | [`docs/pps4-v2-changes/README.md`](./docs/pps4-v2-changes/README.md) |
+| Process artifacts | inventory of three temp archives, decompiler slices, files deleted and unrecoverable | [`docs/process-artifacts/README.md`](./docs/process-artifacts/README.md) |
+| Port source material | protocol text, original README, VB identifier map, compilable restorations | [`docs/restored/README.md`](./docs/restored/README.md) |
+| Cross-check tool | 26 exes vs TS notations, exe map, non-exiting process model, report reading | [`docs/crosscheck.md`](./docs/crosscheck.md) |
+| Change log | files touched per round, provenance, excluded process artifacts | [`docs/CHANGELOG.md`](./docs/CHANGELOG.md) |
+
+> **Filename convention**: every filename in this repository is ASCII (including zip entries).
+> The only non-ASCII strings are external data — the 26 original exe names inside
+> `tools/crosscheck.py` (`EXE_MAP` values), which must be kept verbatim for lookup,
+> plus historical source names quoted in the archived audit material.
+> See [`tools/README.md`](./tools/README.md) for the old-name → new-name table.
+
+The two primary source documents (ASCII filenames for easy linking):
 
 - [`ONP2-protocol-and-restoration.md`](./docs/ONP2-protocol-and-restoration.md) — official protocol
   text with a line-by-line cross-check against the reverse-engineered code, obfuscated → restored
   identifier map, notes on the two core algorithms, byte-level config format, plug-in checklist
 - [`original-vb-project.md`](./docs/original-vb-project.md) — the original desktop project's README
 
-The original VB.NET sources are **not** included here (the web edition is a full TypeScript rewrite).
+The restored VB.NET sources **are** included in [`docs/restored/vb/`](./docs/restored/vb/),
+with the original directory layout intact so the `.vbproj` builds unchanged.
+
+> The audit reports describe the state **before** the 2026-11-07 fixes. Most ❌ verdicts are
+> differences between the restored exe's ONP2 output convention and the Googology Wiki
+> definitions, not bugs to be fixed. For the current behaviour, read
+> `IMPLEMENTATION-NOTES.md` first, then the matching report via `reviews/README.md`.
 
 Credits: 序数界面1 v1.5.4 by the Chinese googology community; ported from
 `OrdinalInterface.vb` / `OrdinalInterface.Designer.vb`, which were restored from the decompiled
-`Form1.cs`.
+`Form1.cs`. The 30 restored notations come from user-supplied decompiler output plus the
+author's `LELS.cpp` and `Parented BMS.cpp`; see [`docs/reviews/`](./docs/reviews/README.md).

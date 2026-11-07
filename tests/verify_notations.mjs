@@ -110,6 +110,12 @@ ok('pps4 fs(1,"9,1") 不再把后续元素吞掉', P.pps4.fs(1, '9,1').startsWit
 ok('mfss fs(1,"9,1,2")', P.mfss.fs(1, '9,1,2').startsWith('9'), P.mfss.fs(1, '9,1,2'));
 
 // ════════════════════════════════════════════════
+section('A7. PPS4 替换：旧版已删除，v2 提升为唯一 pps4');
+ok('注册表只剩 30 个记号', Object.keys(P).length === 30, String(Object.keys(P).length));
+ok('pps4_v2 已从注册表移除', !('pps4_v2' in P));
+eq('pps4 的 name 无 (v2) 后缀', P.pps4.name, 'Parented Predecessor Sequence 4');
+
+// ════════════════════════════════════════════════
 section('B. 契约锁定：展开规则与 fs(n) 块数偏移保持不变');
 // 0-Y：Wiki 基准 (1,4,6,4) 的展开序列
 eq('0-Y (1,4,6,4) fs(3) = Wiki 展开前缀',
@@ -128,13 +134,19 @@ eq('BMS       fs(1,"(0)(1)")', P.bashicu_matrix.fs(1, '(0)(1)'), '(0)(0)');
 eq('KP Hydra  fs(1,"(())")', P.kp_hydra.fs(1, '(())'), '()()');
 eq('PSS Hydra fs(1,"0(1())")', P.pss_hydra.fs(1, '0(1())'), '0(0())');
 eq('pps2      fs(1,"0,1")', P.pps2.fs(1, '0,1'), '0,0');
-eq('pps4      fs(1,"0,1")', P.pps4.fs(1, '0,1'), '0,1');
+// 2026-11-08：旧 pps4（扫描下界 a[p]-1）已删除，当前 pps4 = 用户提供的 exe 口径。
+// 下列期望值取自 docs/pps4-v2-changes/02-behavior-diff.txt 的「新」列。
+eq('pps4      fs(1,"0,1")  = exe 口径', P.pps4.fs(1, '0,1'), '0,0');
+eq('pps4      fs(2,"0,1")', P.pps4.fs(2, '0,1'), '0,0,0');
+eq('pps4      fs(1,"0,1,2")', P.pps4.fs(1, '0,1,2'), '0,1,1');
+eq('pps4      fs(1,"0,1,2,3,4,5")', P.pps4.fs(1, '0,1,2,3,4,5'), '0,1,2,3,4,4');
+eq('pps4      fs(1,"2,1")', P.pps4.fs(1, '2,1'), '2,2');
 eq('coprime   fs(1,"1,3,5,7")', P.coprime.fs(1, '1,3,5,7'), '1,3,5,6');
 eq('residue_class fs(1,"1,3,5,7,9")', P.residue_class.fs(1, '1,3,5,7,9'), '1,3,5,7,8,9,11,13,15');
 eq('LELS      fs(1,"(0,0)(0,1)") 按原作者源码复原', P.lels.fs(1, '(0,0)(0,1)'), '(0)(1)');
 
 // ════════════════════════════════════════════════
-section('C. 宿主组合：序数尺 firstExceeding 在 31 个记号上不抛错');
+section('C. 宿主组合：序数尺 firstExceeding 在 30 个记号上不抛错');
 let rulerBad = [];
 for (const [id, p] of Object.entries(P)) {
   try {
@@ -143,7 +155,7 @@ for (const [id, p] of Object.entries(P)) {
     if (!fe.expr || typeof fe.expr !== 'string') rulerBad.push(id);
   } catch (e) { rulerBad.push(`${id}:${String(e.message || e).slice(0, 30)}`); }
 }
-ok('31 个记号 firstExceeding("0","Limit") 全部可用', rulerBad.length === 0, rulerBad.join(','));
+ok('30 个记号 firstExceeding("0","Limit") 全部可用', rulerBad.length === 0, rulerBad.join(','));
 
 console.log(`\n${'='.repeat(72)}`);
 console.log(`通过 ${pass} / ${pass + fail}${fail ? `，失败 ${fail}` : '  ✅ 全部通过'}`);

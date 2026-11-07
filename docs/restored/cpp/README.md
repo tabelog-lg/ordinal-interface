@@ -1,9 +1,13 @@
 # Ordinal Notation Protocol 2 —— 反编译复原版
 
-31 个记号程序复原成一个可以直接 `make` 的 C++ 工程（外加 3 份 C# 复原版）。
-这批程序其实是**同一份骨架 + 31 个不同的「序数记号系统」**：外壳、解析、输出、
+> 文档总导航：[`../../README.md`](../../README.md)；本目录的上级说明
+> [`../README.md`](../README.md)；实现审查报告 [`../../reviews/README.md`](../../reviews/README.md)；
+> 本轮修正取舍 [`../../IMPLEMENTATION-NOTES.md`](../../IMPLEMENTATION-NOTES.md)。
+
+30 个记号程序复原成一个可以直接 `make` 的 C++ 工程（外加 3 份 C# 复原版）。
+这批程序其实是**同一份骨架 + 30 个不同的「序数记号系统」**：外壳、解析、输出、
 CRT/MinGW 运行时完全一致，差别只在 `Ex()`（展开规则）和少数几个辅助函数。
-复原版把这个结构显式拆开：一份共通框架 + 31 个记号实现。
+复原版把这个结构显式拆开：一份共通框架 + 30 个记号实现。
 
 分两批进来：
 
@@ -14,11 +18,11 @@ CRT/MinGW 运行时完全一致，差别只在 `Ex()`（展开规则）和少数
 
 ```
 ONP2/
-├── Makefile                 # make 一次构建 31 个可执行到 bin/
-├── main.cpp                 # 31 个 exe 共用的交互外壳
+├── Makefile                 # make 一次构建 30 个可执行到 bin/
+├── main.cpp                 # 30 个 exe 共用的交互外壳
 ├── common.h                 # 共通框架：解析/输出/通用外壳/PPS 家族骨架
 ├── matrix_bms.h             # Bashicu 系矩阵记号的公共部分（父指针、差分）
-├── notations/*.cpp          # 31 个记号，一个 exe 一个文件（含第二批 3 个的 C++ 移植）
+├── notations/*.cpp          # 30 个记号，一个 exe 一个文件（含第二批 3 个的 C++ 移植）
 ├── test.py                  # 自洽性自检（5 项不变量 × 第一批 27 个）
 ├── tools/ref_vb.py          # 第二批 3 个：按 VB 1-based Mid 语义的直译（基准）
 ├── tools/check_vb.py        # 第二批 3 个：C++ 移植 vs VB 直译 的对拍
@@ -114,7 +118,7 @@ printf '4\n2\n1,2\n' | ./bin/zero_y
 
 ## TypeScript 版
 
-同级目录 `../onp2-ts/` 是这 30 个记号的 TypeScript 移植，接口对齐序数界面网页版
+同级目录 `../onp2-ts/` 是这批记号的 TypeScript 移植，接口对齐序数界面网页版
 （ordinal-interface）的 `ONP2Plugin`，可直接当插件加载。它以本目录的 C++ 可执行
 为基准做逐条对拍验证，30/30 全部一致。详见 `../onp2-ts/README.md`。
 
@@ -177,7 +181,7 @@ compare0("(0)(1)", "(0,0,0)(0,0,1)")  -> "2"（也判 a<b）
 ```
 
 两个方向都判"小于"。但前者是 `fsLimit(3)`、后者是 `fsLimit(1)`，前者显然更大。
-LELS 原始源码（`LELS(ω进制阵).cpp`）与反编译产物都印证了这点，是原程序行为。
+LELS 原始源码（`LELS.cpp`）与反编译产物都印证了这点，是原程序行为。
 
 作者确认"原 exe 是这个行为，但是还是要修了"，故改成**比较宽度取两侧列数的较大值**
 （多出来的列按 0 参与比较）：
@@ -214,12 +218,17 @@ y = max2(colsA, colsB);
 
 ---
 
-## 附：PPS4 另一版本 与 txar 步进修正（2026-11-07）
+## 附：PPS4 替换 与 txar 步进修正
 
-新增 `notations/pps4_v2.cpp`（另一版 `Parented Predecessor Sequence 4.exe.c`）。
-`common.h` 的 `DecMode` 加了 `DEC_SCAN_LE_WIDE`：降级扫描下界从 `a[p]-1`
-放宽到 0、回退判断移到循环外。与旧版 `pps4` 相比，命令 1/2/3/5 逐字相同、
+2026-11-07 曾新增 `notations/pps4_v2.cpp`（另一版 exe.c），在 `common.h` 的
+`DecMode` 里加了 `DEC_SCAN_LE_WIDE`：降级扫描下界从 `a[p]-1` 放宽到 0、
+回退判断移到循环外；与旧版 `pps4` 相比命令 1/2/3/5 逐字相同、
 546 条命令里 53 条差异全在命令 4。
+
+**2026-11-08 已替换**：与用户 exe 不符的旧 `pps4` 删除，`pps4_v2.cpp`
+改名为 `pps4.cpp` 并成为唯一版本；旧的 `DEC_SCAN_LE` 枚举与分支从
+`common.h` 移除（数值 1 留空号）。当前实现说明见 [`../../pps4-v2.md`](../../pps4-v2.md)，
+历史归档见 [`../../pps4-v2-changes/README.md`](../../pps4-v2-changes/README.md)。
 
 同一轮把 `common.h` 的 `txar()` 步进改成原程序 `flzero()` 揭示的
 `(v + (v==0)) * 100 + 1`（此前误用 `(v+bias) * 100 + 1`，bias=1 时

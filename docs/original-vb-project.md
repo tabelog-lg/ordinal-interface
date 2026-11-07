@@ -26,7 +26,7 @@ OrdinalInterface/
 ├─ OrdinalInterface.vb               主窗体逻辑（英文标识符 + 中文注释）
 ├─ OrdinalInterface.Designer.vb      窗体设计器代码（控件布局）
 ├─ My Project\AssemblyInfo.vb        程序集信息
-├─ ONP2协议与还原说明.md             协议原文、混淆名对照表、还原笔记
+├─ ONP2-protocol-and-restoration.md  协议原文、混淆名对照表、还原笔记（原中文名已 ASCII 化）
 ├─ README.md                         本文件
 └─ examples\
    └─ Omega2Notation\                示例插件：ω² 以下的序数记号
@@ -117,7 +117,7 @@ Ordinal Notation Protocol 2
 | 4 | `"4"`、`a`、`b` | b 的基本列第 a 项 |
 | 5 | `"5"`、`a`、`b` | a<b → `"2"`；否则 → `"1"` |
 
-结果为 0 时回答字符串 `"0"`。完整条文与逐条核对见 `ONP2协议与还原说明.md`。
+结果为 0 时回答字符串 `"0"`。完整条文与逐条核对见 `ONP2-protocol-and-restoration.md`。
 
 ---
 
@@ -138,7 +138,7 @@ Ordinal Notation Protocol 2
 
 ## 六、想看还原细节？
 
-`ONP2协议与还原说明.md` 里有：
+`ONP2-protocol-and-restoration.md` 里有：
 
 * 官方协议原文，以及与逆向结果的**逐条核对表**；
 * 混淆名 → 还原名的完整对照（`Class1` → `RulerNode`、`Sub3` → `CreateChild` ……）；

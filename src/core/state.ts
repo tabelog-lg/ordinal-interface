@@ -2,7 +2,7 @@
  * 全局应用状态 + 配置持久化。
  *
  * 原程序把配置写在**启动目录下的隐藏文件「1」**里（VB 的 FileSystem.Print/Input，
- * 版本号 6，格式见《ONP2协议与还原说明.md》第八节）。网页版拿不到"启动目录"，
+ * 版本号 6，格式见 `docs/ONP2-protocol-and-restoration.md` 第八节）。网页版拿不到"启动目录"，
  * 改用 localStorage + JSON。
  *
  * 另外：原配置里存的是插件 exe 的**绝对路径**，浏览器拿不到真实路径也执行不了 exe，
