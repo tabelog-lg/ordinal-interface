@@ -143,3 +143,21 @@ integration/                       ← 已改好的项目副本
 
 跑实验：`node tests/<name>.mjs` 需先用 esbuild 打包（见各文件顶部），
 或直接 `npm run build` + 开页面。
+
+
+---
+
+## 附：PPS4 另一版本（2026-11-07 追加）
+
+又给了一份 `Parented Predecessor Sequence 4.exe.c`（覆盖了 11/1 那份）。
+它**不是**已有的 weak / second / third / extremely weak 变体，而是同一记号的
+另一个实现：只有 `Ex()` 的「末元素降级」扫描下界不同
+（旧版扫到 `a[p]-1`，新版一路扫到下标 0，且回退判断移到循环外）。
+
+已新增 `src/notations/pps4_v2.ts`（id `pps4_v2`）并注册进 `BUILTINS`。
+实测 546 条命令：命令 1/2/3/5 完全一致，**53 条差异全部落在命令 4**。
+完整对照见 `docs/pps4-v2.md`。
+
+顺带修掉解析时发现的 `txar()` 步进偏差（原程序 `flzero()` 表明用
+`(v + (v==0))*100+1`，复原版误用 `(v+bias)*100+1`），影响 10 个 bias=1 记号
+在元素值为 9/99/999 时的解析；已加回归用例。同样详见 `docs/pps4-v2.md`。

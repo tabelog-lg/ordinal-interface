@@ -24,7 +24,8 @@ export function atoiAt(s: string, i: number): number {
 /**
  * txar(): "12,3,45" -> number[501]，末尾补 0。
  * bias=1 时每个元素 +1（把 0 让给结束哨兵），输出侧再 -1。
- * 步进用的是原程序的写法 (int)log10(v*100+1)，即「数字位数 + 1(逗号)」。
+ * 步进用的是原程序的 (int)log10((v + flzero(v))*100+1)，即「数字位数 + 1(逗号)」，
+ * 其中 flzero(v) = (v === 0)，用来避免 v=0 时步进为 0 而死循环。
  */
 export function txar(s: string, bias = 0): number[] {
   const buf = new Array<number>(501).fill(0);
@@ -33,11 +34,14 @@ export function txar(s: string, bias = 0): number[] {
   for (let i = 0; i < len && n < SEQMAX; ) {
     const v = atoiAt(s, i);
     buf[n] = v + bias;
-    const stored = v + (bias ? 1 : 0);
-    // 原程序直接 i += (int)log10(stored*100+1)：stored == 0 时步进为 0，
-    // 会死循环并把后面的元素全部冲成 0（C 里还会写越界）。
-    // 按「数字位数 + 1 个分隔符」的本来语义，stored == 0 时步进应为 2。
-    i += stored > 0 ? Math.trunc(Math.log10(stored * 100 + 1)) : 2;
+    // ★ 原程序 txar() 里有个 flzero(int) { return x === 0; }，
+    //   步进实际是 (int)log10((v + flzero(v)) * 100 + 1)，
+    //   即「解析值 v（**不含** bias），v==0 时抬成 1」—— 这是原作者自己
+    //   修 v=0 死循环的方式（log10(1)=0 会让 i 不动）。
+    //   之前复原成 (v+bias)*100+1 是错的：bias=1 时 v=9/99/999 会多跳一位，
+    //   把 "9,1" 解析成只剩 "9"。
+    const t = v + (v === 0 ? 1 : 0);
+    i += Math.trunc(Math.log10(t * 100 + 1));
     n++;
   }
   return buf;
@@ -188,6 +192,8 @@ export const DecMode = {
   DEC_SCAN_EQ: 2,
   /** second / extremely weak：同上，且遇更小值直接跳到边界 */
   DEC_SCAN_EQ_SKIP: 3,
+  /** PPS4 另一版本：条件同 DEC_SCAN_LE，但降级扫描向左一直到下标 0 */
+  DEC_SCAN_LE_WIDE: 4,
 } as const;
 export type DecMode = (typeof DecMode)[keyof typeof DecMode];
 
@@ -204,6 +210,21 @@ export function ppsEx(a: number[], n: number, x: number, decMode: DecMode, liftM
   if (g(x - 1) !== g(p)) {
     if (decMode === DecMode.DEC_MINUS1) {
       a[x - 1] = g(x - 1) - 1;
+    } else if (decMode === DecMode.DEC_SCAN_LE_WIDE) {
+      // ★ 另一版 PPS4：下界从 g(p)-1 放宽到 0，且"扫完没命中就回退父值"
+      //   移到循环外（c < 0）。反编译产物里对应
+      //     for(local_c = a[x-1]-3; -1 < local_c; local_c--)
+      //   与 if(local_c == -1) a[x-1] = a[iVar2];
+      //   进入本分支时 a[x-1] 仍是原值 v、p = v-2，故新版的 a[a[x-1]-2]
+      //   与旧版的 a[iVar2] 是同一个元素。
+      let c = g(x - 1) - 3;
+      for (; c >= 0; c--) {
+        if (g(c) <= g(p)) {
+          a[x - 1] = c + 2;
+          break;
+        }
+      }
+      if (c < 0) a[x - 1] = g(p);
     } else {
       for (let c = g(x - 1) - 3; g(p) - 1 <= c; c--) {
         const hit = decMode === DecMode.DEC_SCAN_LE ? g(c) <= g(p) : g(c) === g(p);

@@ -43,11 +43,14 @@ inline int *txar(const char *s, int bias = 0) {
     for (int i = 0; i < len && n < SEQMAX;) {
         int v = atoi(s + i);
         buf[n] = v + bias;
-        // 原程序直接 i += (int)log10(stored*100+1)：stored == 0 时步进为 0，
-        // 会死循环并把后续元素全部冲成 0（原 exe 里还会写越界）。
-        // 按「数字位数 + 1 个分隔符」的本来语义，stored == 0 时步进应为 2。
-        int stored = v + (bias ? 1 : 0);
-        i += stored > 0 ? (int)std::log10((double)(stored * 100 + 1)) : 2;
+        // ★ 原程序 txar() 里有个 flzero(int) { return x == 0; }，
+        //   步进实际是 (int)log10((v + flzero(v)) * 100 + 1)，
+        //   即「解析值 v（**不含** bias），v==0 时抬成 1」—— 这是原作者自己
+        //   修 v=0 死循环的方式（log10(1)=0 会让 i 不动）。
+        //   之前复原成 (v+bias)*100+1 是错的：bias=1 时 v=9/99/999 会多跳一位，
+        //   把 "9,1" 解析成只剩 "9"。
+        int t = v + (v == 0 ? 1 : 0);
+        i += (int)std::log10((double)(t * 100 + 1));
         n++;
     }
     return buf;
@@ -269,7 +272,8 @@ enum DecMode {
     DEC_MINUS1 = 0,   // PPS2 / PPS3：a[x-1] -= 1
     DEC_SCAN_LE,      // PPS4        ：向下扫到 a[c] <= a[p]
     DEC_SCAN_EQ,      // weak / third：向下扫到 a[c] == a[p]
-    DEC_SCAN_EQ_SKIP  // second / extremely weak：同上，且遇更小值直接跳到边界
+    DEC_SCAN_EQ_SKIP, // second / extremely weak：同上，且遇更小值直接跳到边界
+    DEC_SCAN_LE_WIDE  // PPS4 v2（另一版本）：条件同 DEC_SCAN_LE，但向左扫到下标 0
 };
 
 inline void ppsEx(int *a, int n, DecMode decMode, bool liftMode) {
@@ -287,6 +291,20 @@ inline void ppsEx(int *a, int n, DecMode decMode, bool liftMode) {
         case DEC_MINUS1:
             a[x - 1] -= 1;
             break;
+        case DEC_SCAN_LE_WIDE: {
+            // ★ 另一版 PPS4：把降级扫描的下界从 a[p]-1 放宽到 0，
+            //   且"扫完没命中就回退父值"的判断移到循环外（c < 0）。
+            //   反编译产物里对应 for(local_c = a[x-1]-3; -1 < local_c; local_c--)
+            //   与 if(local_c == -1) a[x-1] = a[iVar2];
+            //   进入本分支时 a[x-1] 仍是原值 v、p = v-2，故
+            //   a[a[x-1]-2]（新版写法）与 a[iVar2]（旧版写法）是同一个元素。
+            int c = a[x - 1] - 3;
+            for (; c >= 0; c--) {
+                if (a[c] <= a[p]) { a[x - 1] = c + 2; break; }
+            }
+            if (c < 0) a[x - 1] = a[p];
+            break;
+        }
         default:
             for (int c = a[x - 1] - 3; a[p] - 1 <= c; c--) {
                 bool hit = (decMode == DEC_SCAN_LE) ? (a[c] <= a[p]) : (a[c] == a[p]);

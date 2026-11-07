@@ -25,14 +25,14 @@
 | **序数尺** | 滚轮缩放，沿 0 → 1 → … → ω → ω·2 → … → ω² 一直放大 |
 | **设置** | 配色、对齐模式、密集刻度 / 连续展开、配置导入导出 |
 
-内置 **32 个**记号。前两个由原项目的 VB 示例逐行移植，后 30 个由 ONP2 exe 的
+内置 **33 个**记号。前两个由原项目的 VB 示例逐行移植，后 31 个由 ONP2 exe 的
 反编译产物复原（见 `docs/restored/`）：
 
 | 记号 | 覆盖范围 / 来源 | 表达式示例 |
 |---|---|---|
 | `Omega2 (w^2)` | ω² 以下，由 `examples/Omega2Notation/Program.vb` 逐行移植 | `0` `5` `w` `w*3` `w*3+7` `Limit`（= ω²） |
 | `OmegaOmega (w^w)` | ω^ω 以下，形如 Σ c[i]·ω^i | `w^2` `w^2*3+w*2+5` `w^3+w` `Limit`（= ω^ω） |
-| 30 个复原记号 | Bashicu 矩阵系 / Y 序列系 / PrSS 系 / PPS 系等 | `(0,0)(1,1)(2,2)` `1,2,3` `(()())` `0(1(2()))` |
+| 31 个复原记号 | Bashicu 矩阵系 / Y 序列系 / PrSS 系 / PPS 系等 | `(0,0)(1,1)(2,2)` `1,2,3` `(()())` `0(1(2()))` |
 
 表达式写法由各记号自己决定（矩阵、逗号序列、括号串、空格序列都有），
 不统一 —— 换记号时旧的表达式串一般不再适用。
@@ -105,13 +105,13 @@ src/
    ├─ misc.ts             杂项页
    ├─ settings.ts         设置页
    └─ plugins.ts          记号列表页
-└─ notations/             ★ 30 个复原记号（ONP2 插件形态）
+└─ notations/             ★ 31 个复原记号（ONP2 插件形态）
    ├─ index.ts            注册表
    ├─ core/               共通框架：seq / matrix / bms / vb
-   └─ {30 个记号}.ts
+   └─ {31 个记号}.ts
 tests/
 ├─ verify.ts              逻辑自检（不依赖 DOM）
-├─ integration.mjs        把 30 个记号塞进宿主 / 序数尺 / 展开树跑一遍
+├─ integration.mjs        把 31 个记号塞进宿主 / 序数尺 / 展开树跑一遍
 ├─ integration2.mjs       查每个记号命令 1（基本列）的形态
 ├─ i3.mjs                 查给定表达式后展开是否严格递增
 └─ check_names.mjs        断言：plugins.ts 的名字表与记号实现一致
@@ -119,10 +119,13 @@ docs/
 ├─ ONP2-protocol-and-restoration.md   协议条文、复原说明
 ├─ original-vb-project.md              原项目说明
 ├─ README.md
+├─ pps4-v2.md             ★ PPS4 另一版本：反编译对照、输出差异、txar 修正
 └─ restored/              ★ 复原产物（移植依据，不进 dist）
    ├─ README.md
-   ├─ cpp/                30 个记号的 C++ 复原版（make 可构建）
-   └─ csharp/             第二批 3 个记号的 VB.NET/C# 复原版
+   ├─ cpp/                31 个记号的 C++ 复原版（make 可构建）
+   ├─ csharp/             第二批 3 个记号的 VB.NET/C# 复原版
+   ├─ lels-original-source/  LELS 原始 C++ 源码
+   └─ vb/                 还原出的完整 VB.NET 工程
 public/plugins/            插件模板
 ```
 
@@ -169,7 +172,7 @@ export default {
 UI、列表渲染、默认选中逻辑都是通用的，不用再改别处。
 
 > `name` 是后来加的字段。原先启动时为了拿名字要把每个内置记号都 `import` 一遍，
-> 2 个时无所谓，32 个时等于把懒加载设计废掉（首屏拉下全部记号代码）。
+> 2 个时无所谓，33 个时等于把懒加载设计废掉（首屏拉下全部记号代码）。
 > 改成表里写死名字后启动零 import —— 代价是名字要维护两份，
 > `tests/check_names.mjs` 有断言兜底。
 
