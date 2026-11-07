@@ -14,7 +14,7 @@ export class ZeroY extends SeqNotation {
     return seqLimitTwo(n);
   }
 
-  private exRec(a: number[], n: number): void {
+  private exRec(a: number[], n: number, depth = 0): void {
     const g = (i: number) => a[i] ?? 0;
     const fb = new Array<number>(SEQMAX).fill(0); // 到父的落差
     const an = new Array<number>(1002).fill(0); // 父下标
@@ -25,12 +25,12 @@ export class ZeroY extends SeqNotation {
       if (this.x <= i) {
         // 父表算完，开始真正的展开
         this.l = this.x - 1 - an[this.x - 1];
-        if (fb[this.x - 1] === 1) {
+        if (fb[this.x - 1] === 1 || depth >= 64) {
           // 落差为 1：整段照抄
           for (let k = this.x - 1; k < this.l * n + this.x - 1; k++) a[k] = g(k - this.l);
         } else {
           // 否则先递归展开落差，再加回祖先
-          this.exRec(fb, n);
+          this.exRec(fb, n, depth + 1);
           for (let k = this.x; k < this.l * n + this.x - 1; k++)
             an[k] =
               an[k - this.l] < an[this.x - this.l] ? an[k - this.l] : an[k - this.l] + this.l;

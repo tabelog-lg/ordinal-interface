@@ -18,8 +18,8 @@ export class KpHydra extends Notation {
 
   fsLimit(a: number): string {
     let r = '';
-    for (let i = 0; i <= a; i++) r += '(';
-    for (let j = 0; j <= a; j++) r += ')';
+    for (let i = 0; i <= a + 1; i++) r += '(';
+    for (let j = 0; j <= a + 1; j++) r += ')';
     return r;
   }
 
@@ -30,11 +30,13 @@ export class KpHydra extends Notation {
   }
 
   override pred(a: string): string {
-    if (a === '()') return '0';
+    if (a === '' || a === '0' || a === '()') return '0';
     return vmid(a, 1, a.length - 2);
   }
 
   override fs(n: number, s: string): string {
+    // 零 / 后继没有基本列；不短路会拼出 ")" 这类不平衡串
+    if (this.typeOf(s) !== '3') return s === '0' ? '0' : s;
     const L = s.length;
     let i1 = L - 2; // 从倒数第二个字符起
     while (i1 > 0 && vmid(s, i1, 1) === ')') i1--; // 向左跳过闭合，落到最后一个 '('

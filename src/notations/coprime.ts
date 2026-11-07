@@ -7,15 +7,16 @@
 import { SeqNotation } from './core/notation';
 import { seqLimitTwo } from './core/seq';
 
-/** 返回 1 表示 a、b 存在 >1 的公因子 */
+/** 返回 1 表示 a、b 不互素（gcd > 1）。gcd(0,b)=|b|，与数学定义一致。 */
 function hasCommonFactor(a: number, b: number): number {
-  const aa = Math.abs(a);
-  const bb = Math.abs(b);
-  for (let c = 2; ; c++) {
-    if (aa + 1 < c) return 0;
-    if (aa % c === 0 && bb % c === 0) break;
+  let x = Math.abs(a);
+  let y = Math.abs(b);
+  while (y !== 0) {
+    const t = x % y;
+    x = y;
+    y = t;
   }
-  return 1;
+  return x > 1 ? 1 : 0;
 }
 
 export class Coprime extends SeqNotation {
@@ -30,8 +31,15 @@ export class Coprime extends SeqNotation {
     fb[0] = 0;
     for (let i = 1; ; i++) {
       if (this.x <= i) {
+        // 合法式以 1 开头，链走到第 0 项必因 gcd=1 停下。
+        // 非标准输入可能在 fb[0]=0 上形成自环，导致函数永不返回 —— 加护栏。
         let k = fb[this.x - 1] ?? 0;
-        while (hasCommonFactor(g(this.x - 1), g(k)) === 1) k = fb[k] ?? 0;
+        for (let guard = 0; guard <= 1000; guard++) {
+          if (hasCommonFactor(g(this.x - 1), g(k)) !== 1) break;
+          const nk = fb[k] ?? 0;
+          if (nk === k) break;
+          k = nk;
+        }
         this.l = this.x - 1 - k;
         const hi = g(this.x - 1);
         const lo = g(k);

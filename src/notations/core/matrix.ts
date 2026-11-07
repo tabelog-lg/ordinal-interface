@@ -46,7 +46,9 @@ export function txma(
     for (let j = 0; j < C; j++) m[r * C + j] = row[j] ?? 0;
     rows++;
     if (rows === 2) {
-      if (ymode === 0) cols = (cellStr.length >> 1) + 1;
+      // 原 C++ 用 strlen(sr)/2+1 推断列数，隐式假定每个元素都是一位数；
+      // 第 2 行出现 10/11/… 时会算多列，展开随即越界。按实际元素个数推断。
+      if (ymode === 0) cols = cellStr.split(',').length;
       if (ymode === 1) {
         let t = C - 1;
         while (t > 0 && m[1 * C + t] === 0) t--;
@@ -128,7 +130,7 @@ export function matrixPrecursor(
   const { m, rows, cols } = txma(s, C, ymode);
   const x = rows;
   const y = cols;
-  if (x === 1) return '0';
+  if (x <= 1) return '0';  // 空矩阵 / 单列矩阵的前驱都是 0
   if (varRow) return maoutVar(m, C, x - 1);
   return maout(m, C, x - 1, y + dy);
 }

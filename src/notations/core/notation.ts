@@ -65,6 +65,10 @@ export abstract class SeqNotation extends Notation {
     return this.out(this.x === 1 ? new Array<number>(SEQMAX).fill(0) : a);
   }
   fs(n: number, s: string): string {
+    // 协议命令 4 只对极限表达式有意义。零 / 后继没有基本列：
+    // 零返回 "0"，其余返回原表达式（保持宿主 firstExceeding 的谓词单调，
+    // 否则 P(i) 恒假会让序数尺抛错），同时避免负数 / 空串 / 不平衡括号串。
+    if (this.typeOf(s) !== '3') return s === '0' ? '0' : s;
     const a = this.parse(s);
     let i = 1;
     while ((a[i] ?? 0) !== 0) i++;
@@ -108,10 +112,10 @@ export abstract class MatrixNotation extends Notation {
   /** limit 的默认实现：两行，第 2 行前 n 列填 1 */
   protected limitMat(n: number): string {
     this.m = this.mk();
-    for (let i = 0; i < n; i++) this.put(1, i, 1);
-    if (n === 0) return '(0)(0)';
+    const k = n + 1;
+    for (let i = 0; i < k; i++) this.put(1, i, 1);
     if (this.varRow) return maoutVar(this.m, this.C, 2);
-    return maout(this.m, this.C, 2, n);
+    return maout(this.m, this.C, 2, k);
   }
 
   fsLimit(a: number): string {
@@ -126,6 +130,8 @@ export abstract class MatrixNotation extends Notation {
     return matrixPrecursor(s, this.C, this.ymode, 0, this.varRow);
   }
   fs(n: number, s: string): string {
+    // 注意：不能调 this.typeOf() —— 它会重建 this.m，冲掉下面 txma 的结果。
+    if (matrixType0(s, this.C, this.ymode, this.varRow) !== '3') return s === '0' ? '0' : s;
     this.m = this.mk();
     const r = txma(s, this.C, this.ymode);
     this.m = r.m;

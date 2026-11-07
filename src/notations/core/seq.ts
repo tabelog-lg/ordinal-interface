@@ -29,6 +29,9 @@ export function atoiAt(s: string, i: number): number {
  */
 export function txar(s: string, bias = 0): number[] {
   const buf = new Array<number>(501).fill(0);
+  // "0" 是协议约定的零表达式（arout 对空序列的输出），不是含一个元素 0 的序列。
+  // bias=1 的记号若不特判，会把它读成 [1] 并把 typeOf("0") 误判为后继。
+  if (s === '0') return buf;
   const len = s.length;
   let n = 0;
   for (let i = 0; i < len && n < SEQMAX; ) {
@@ -73,7 +76,7 @@ export function arout1(a: number[]): string {
 export function seqLimit(n: number, _bias: number): number[] {
   const a = new Array<number>(501).fill(0);
   for (let i = 0; ; i++) {
-    if (n < i) break;
+    if (n + 1 < i) break;
     a[i] = i + 1;
   }
   return a;
@@ -84,7 +87,7 @@ export function seqLimitExact(n: number, _bias: number): number[] {
   const a = new Array<number>(501).fill(0);
   a[0] = 1;
   for (let i = 1; ; i++) {
-    if (n <= i) break;
+    if (n + 1 < i) break;
     a[i] = i + 1;
   }
   return a;
@@ -105,7 +108,7 @@ export function seqLimitOne(_n: number): number[] {
 export function seqLimitTwo(n: number): number[] {
   const a = new Array<number>(501).fill(0);
   a[0] = 1;
-  a[1] = n + 1;
+  a[1] = n + 2;
   return a;
 }
 

@@ -18,8 +18,8 @@ export class PssHydra extends Notation {
 
   fsLimit(a: number): string {
     let r = '';
-    for (let i = 0; i <= a; i++) r += String(i) + '(';
-    for (let j = 0; j <= a; j++) r += ')';
+    for (let i = 0; i <= a + 1; i++) r += String(i) + '(';
+    for (let j = 0; j <= a + 1; j++) r += ')';
     return r;
   }
 
@@ -29,11 +29,12 @@ export class PssHydra extends Notation {
   }
 
   override pred(a: string): string {
-    if (a === '0()') return '0';
+    if (a === '' || a === '0' || a === '0()') return '0';
     return vmid(a, 1, a.length - 3);
   }
 
   override fs(n: number, s: string): string {
+    if (this.typeOf(s) !== '3') return s === '0' ? '0' : s;
     const L = s.length;
     let i1 = L - 2;
     while (i1 > 0 && vmid(s, i1, 1) === ')') i1--; // 跳过尾部闭合，落到最后一个 '('

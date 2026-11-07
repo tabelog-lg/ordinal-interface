@@ -13,11 +13,10 @@ export class Ppm00t extends Ppm {
   override fsLimit(a: number): string {
     this.m = new Array<number>(ROWMAX * this.C).fill(0);
     for (let r = 2; ; r++) {
-      if (a < r) break;
+      if (a + 2 < r) break;
       for (let j = 0; j < r - 1; j++) this.put(r, j, r);
     }
-    if (a === 0) return '(0)';
-    return maout(this.m, this.C, a + 1, Math.max(a - 1, 1));
+    return maout(this.m, this.C, a + 3, Math.max(a + 1, 1));
   }
 
   protected override ex(n: number): void {

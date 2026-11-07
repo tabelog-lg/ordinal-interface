@@ -161,3 +161,16 @@ integration/                       ← 已改好的项目副本
 顺带修掉解析时发现的 `txar()` 步进偏差（原程序 `flzero()` 表明用
 `(v + (v==0))*100+1`，复原版误用 `(v+bias)*100+1`），影响 10 个 bias=1 记号
 在元素值为 9/99/999 时的解析；已加回归用例。同样详见 `docs/pps4-v2.md`。
+
+
+---
+
+## 附：实现基准与修正（2026-11-07）
+
+按 11 份实现审查报告修掉输入层与协议层问题：两位数解析、零表达式判定、
+`fsLimit` 统一 0-based、零/后继 `fs` 短路、`pred` 协议、CpS / LELS / 0-Y 的
+死循环与栈溢出护栏。**展开规则未改动**——`fs(n)` 的块数偏移改了会破坏
+`EngineHost.firstExceeding()` 与 `validate()` 的逼近链，实测序数尺会抛错。
+
+基准口径、不改项清单、已知限制与复现命令见 [`docs/IMPLEMENTATION-NOTES.md`](docs/IMPLEMENTATION-NOTES.md)。
+回归用例：`npm run verify:notations`。

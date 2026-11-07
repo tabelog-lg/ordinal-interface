@@ -26,7 +26,7 @@ export class RemainderRetention extends Notation {
   fsLimit(a: number): string {
     const b = new Array<number>(SEQMAX).fill(0);
     b[1] = 1;
-    b[2] = a + 1;
+    b[2] = a + 2;
     return arout1(b);
   }
 
@@ -48,6 +48,7 @@ export class RemainderRetention extends Notation {
   }
 
   override fs(n: number, seq: string): string {
+    if (this.typeOf(seq) !== '3') return seq === '0' ? '0' : seq;
     const a = txar1(seq);
     let i = 1;
     while ((a[i] ?? 0) !== 0) i++;

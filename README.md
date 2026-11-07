@@ -37,6 +37,12 @@
 表达式写法由各记号自己决定（矩阵、逗号序列、括号串、空格序列都有），
 不统一 —— 换记号时旧的表达式串一般不再适用。
 
+> 复原记号对齐的是 **ONP2 exe 的输出口径**，不是逐字对齐 Googology Wiki 定义：
+> `fs(n)` 在 0-Y / BMS / LPrSS / KP Hydra / PSS Hydra 上比定义多一块、
+> `less` 采用字典序、LELS 按原作者 C++ 源码复原。已按 11 份实现审查报告修掉
+> 输入层、协议短路与死循环护栏，并统一 `fsLimit` 为 0-based。
+> 完整口径与「为什么不改那几处」见 [`docs/IMPLEMENTATION-NOTES.md`](docs/IMPLEMENTATION-NOTES.md)。
+
 列表里第一项是默认记号；想改默认就调 `src/engine/plugins.ts` 里 `BUILTINS` 数组的顺序。
 
 界面文案沿用原程序原文：表达式不正确 / 序号不正确 / 表达式不是极限序数 /
@@ -120,6 +126,7 @@ docs/
 ├─ original-vb-project.md              原项目说明
 ├─ README.md
 ├─ pps4-v2.md             ★ PPS4 另一版本：反编译对照、输出差异、txar 修正
+├─ IMPLEMENTATION-NOTES.md ★ 实现基准、修正清单、明确不改的偏移与理由
 └─ restored/              ★ 复原产物（移植依据，不进 dist）
    ├─ README.md
    ├─ cpp/                31 个记号的 C++ 复原版（make 可构建）

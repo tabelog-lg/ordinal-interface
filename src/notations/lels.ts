@@ -5,7 +5,7 @@
  * 展开时复制差值表并按倍数 mul 累加，再把差值还原成元素值。
  */
 import { MatrixNotation } from './core/notation';
-import { ROWMAX, txma, maout, arow } from './core/matrix';
+import { ROWMAX, txma, maout, arow, matrixType0 } from './core/matrix';
 import { max2 } from './core/seq';
 
 export class Lels extends MatrixNotation {
@@ -67,6 +67,10 @@ export class Lels extends MatrixNotation {
   }
 
   override fs(n: number, s: string): string {
+    // 仅加健壮性护栏，展开规则未动：末行全 0 / 空矩阵按定义是「删末项的后继」，
+    // 没有基本列；原实现会在差值表扫描里无限递增列下标，把宿主页面冻死。
+    // 注意不能调 this.typeOf() —— 它会重建 this.m，冲掉下面 txma 的结果。
+    if (matrixType0(s, this.C, this.ymode) !== '3') return s === '0' ? '0' : s;
     this.m = this.mk();
     const r = txma(s, this.C, this.ymode);
     this.m = r.m;
@@ -187,19 +191,22 @@ export class Lels extends MatrixNotation {
     let c0 = 0;
     let times: number;
     if (this.at(this.x - 1, 0) === 0) {
-      while (this.at(this.x - 1, c0) === 0) c0++;
+      while (c0 < this.y && this.at(this.x - 1, c0) === 0) c0++;
+      if (c0 >= this.y) return; // 末行全 0：无基本列，避免越界扫描
       const pr0 = this.par1(this.x - 1);
       this.put(this.x - 1, c0 - 1, this.at(this.x - 1, c0 - 1) + this.at(pr0, c0 - 1) + n);
       this.put(this.x - 1, c0, this.at(this.x - 1, c0) - 1);
       c0 = 0;
-      while (this.dAt(this.x - 1, c0) === 0) c0++;
+      while (c0 < this.y && this.dAt(this.x - 1, c0) === 0) c0++;
+      if (c0 >= this.y) return; // 差值表全 0：无基本列，避免越界扫描
       this.dPut(this.x - 1, c0, this.dAt(this.x - 1, c0) - 1);
       this.dPut(this.x - 1, c0 - 1, n);
       times = 1;
     } else {
       this.dPut(this.x - 1, 0, this.dAt(this.x - 1, 0) - 1);
       let k = 0;
-      while (this.at(this.x - 1, k) === 0) k++;
+      while (k < this.y && this.at(this.x - 1, k) === 0) k++;
+      if (k >= this.y) return; // 末行全 0：无基本列，避免越界扫描
       this.put(this.x - 1, k, this.at(this.x - 1, k) - 1);
       times = n;
     }

@@ -62,7 +62,7 @@ export class Lprss extends Notation {
   override readonly description = '逗号分隔整数，元素值可任意大';
 
   fsLimit(a: number): string {
-    return '1,' + (a + 1);
+    return '1,' + (a + 2);
   }
 
   override typeOf(a: string): string {
@@ -73,11 +73,12 @@ export class Lprss extends Notation {
   }
 
   override pred(a: string): string {
-    if (a === '1') return '0';
+    if (a === '' || a === '0' || a === '1') return '0';
     return vmid(a, 1, a.length - 2);
   }
 
   override fs(n: number, b: string): string {
+    if (this.typeOf(b) !== '3') return b === '0' ? '0' : b;
     return render(expandArr(n, parse(b)));
   }
 

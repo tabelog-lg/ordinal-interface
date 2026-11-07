@@ -70,7 +70,7 @@ export class Stos extends SeqNotation {
     // 原程序直接拼字符串 "1,w,w,...,w"（与 seqLimit 一样带 off-by-one）
     let out = '1,';
     for (let i = 1; ; i++) {
-      if (a < i) break;
+      if (a + 1 < i) break;
       out += 'w,';
     }
     return out.slice(0, -1);
