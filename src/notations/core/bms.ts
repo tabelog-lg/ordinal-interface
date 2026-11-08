@@ -20,7 +20,8 @@ export function bmsPar(cellIdx: number, k: number, C: number, m: number[]): numb
       if (q < 0) break; // 原程序无此边界检查（走到矩阵上方即越界）
     }
   } else {
-    const buf = new Array<number>(301).fill(0);
+    // 不预填 301 个 0：只有 buf[1..c] 会被写，未写位置按 0 读（与 fill(0) 等价）。
+    const buf = new Array<number>(301);
     let c = 0;
     let p = cellIdx;
     while (0 < p && cell(m, p - 1) !== 0) {
@@ -34,7 +35,7 @@ export function bmsPar(cellIdx: number, k: number, C: number, m: number[]): numb
     for (p = cellIdx; 0 < p; p -= C) {
       if (cell(m, p) < cell(m, cellIdx)) {
         for (let i = n; i >= 0; i--)
-          if (Math.floor(((p - cellIdx) + k) / C) === buf[i]) {
+          if (Math.floor(((p - cellIdx) + k) / C) === (buf[i] ?? 0)) {
             found = 1;
             break;
           }
@@ -50,7 +51,7 @@ export function bmsPar(cellIdx: number, k: number, C: number, m: number[]): numb
  * 沿父链上溯，若链上出现目标行 target 则抬升 (1)，否则不抬 (0)。
  */
 export function bmsAsmt(cellIdx: number, target: number, k: number, C: number, m: number[]): number {
-  const buf = new Array<number>(301).fill(0);
+  const buf = new Array<number>(301);
   if (cell(m, cellIdx) !== 0) {
     let q = cellIdx;
     let c = 0;
@@ -64,7 +65,7 @@ export function bmsAsmt(cellIdx: number, target: number, k: number, C: number, m
       }
       c++;
     }
-    for (let i = c + 1; i >= 0; i--) if (target === buf[i]) return 1;
+    for (let i = c + 1; i >= 0; i--) if (target === (buf[i] ?? 0)) return 1;
   }
   return 0;
 }

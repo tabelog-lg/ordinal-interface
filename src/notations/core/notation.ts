@@ -5,7 +5,7 @@
 
 import type { ONP2Plugin } from '../../engine/types';
 import { SEQMAX, txar, arout, seqLimit, seqType0, seqCompare } from './seq';
-import { ROWMAX, txma, maout, maoutVar, matrixType0, matrixPrecursor, matrixCompare } from './matrix';
+import { ROWMAX, maout, maoutVar, matrixType0, matrixParse, matrixPrecursor, matrixCompare } from './matrix';
 
 export abstract class Notation implements ONP2Plugin {
   abstract readonly name: string;
@@ -17,8 +17,10 @@ export abstract class Notation implements ONP2Plugin {
   protected y = 0;
   /** 展开步长（Y 系列、余数类） */
   protected l = 0;
-  /** 父索引表（Y 系列） */
-  protected pm: number[] = new Array<number>(SEQMAX).fill(0);
+  /** 父索引表（仅两个 0-Y 记号使用，惰性初始化） */
+  protected pm: number[] = [];
+  /** 是否需要在 fs() 前重置 pm 链（全仓库只有 2 个 0-Y 记号为 true） */
+  protected usePm = false;
 
   abstract fsLimit(a: number): string;
   abstract typeOf(a: string): string;
@@ -62,7 +64,7 @@ export abstract class SeqNotation extends Notation {
     this.x = n;
     a[n - 1] = 0;
     // 长度为 1 时原程序改指向一块全 0 的静态缓冲，输出 "0"
-    return this.out(this.x === 1 ? new Array<number>(SEQMAX).fill(0) : a);
+    return this.out(this.x === 1 ? [] : a);
   }
   fs(n: number, s: string): string {
     // 协议命令 4 只对极限表达式有意义。零 / 后继没有基本列：
@@ -73,7 +75,7 @@ export abstract class SeqNotation extends Notation {
     let i = 1;
     while ((a[i] ?? 0) !== 0) i++;
     this.x = i;
-    for (let k = 0; k < SEQMAX; k++) this.pm[k] = k;
+    if (this.usePm) for (let k = 0; k < SEQMAX; k++) this.pm[k] = k;
     if (n === 0) a[this.x - 1] = 0;
     else this.ex(a, n);
     return this.out(a);
@@ -130,10 +132,11 @@ export abstract class MatrixNotation extends Notation {
     return matrixPrecursor(s, this.C, this.ymode, 0, this.varRow);
   }
   fs(n: number, s: string): string {
-    // 注意：不能调 this.typeOf() —— 它会重建 this.m，冲掉下面 txma 的结果。
-    if (matrixType0(s, this.C, this.ymode, this.varRow) !== '3') return s === '0' ? '0' : s;
-    this.m = this.mk();
-    const r = txma(s, this.C, this.ymode);
+    // 一次解析同时拿到类型码与矩阵：原实现先 matrixType0()（内部一次 txma）
+    // 再 txma()，同一个串解析两遍；matrixParse 合并后输出逐字相同。
+    // 注意：不能调 this.typeOf() —— 它会重建 this.m，冲掉下面的解析结果。
+    const r = matrixParse(s, this.C, this.ymode, this.varRow);
+    if (r.typeCode !== '3') return s === '0' ? '0' : s;
     this.m = r.m;
     this.x = r.rows;
     this.y = r.cols;

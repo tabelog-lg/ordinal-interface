@@ -8,6 +8,7 @@ import { SeqNotation } from './core/notation';
 import { SEQMAX, seqLimitTwo, pare } from './core/seq';
 
 export class ZeroY extends SeqNotation {
+  protected override usePm = true;
   override readonly name = '0-Y Sequence';
   protected override bias = 0;
   protected override limitArr(n: number): number[] {

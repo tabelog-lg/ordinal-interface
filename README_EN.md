@@ -67,7 +67,8 @@ sub-path such as `https://xxx.github.io/<repo>/` — **renaming the repo require
 
 ```bash
 npm run verify   # logic self-test
-npm run bench    # performance benchmark (for before/after comparisons)
+npm run bench             # benchmark: 2 built-in notations + engine combos
+npm run bench:notations   # benchmark: all 30 restored notations (isolated workers)
 ```
 
 About 200 assertions covering the five protocol commands, expression parsing/formatting, the `Limit`
@@ -109,7 +110,8 @@ src/
    └─ plugins.ts          Notation tab
 tests/
 ├─ verify.ts               logic self-test (no DOM required)
-├─ verify_notations.mjs    notation regression suite (95 assertions: fixes + PPS4 + contract locks)
+├─ verify_notations.mjs    notation regression suite (99 assertions: fixes + PPS4 + contract locks + output snapshot)
+├─ bench_notations.mjs     benchmark for all 30 notations (npm run bench:notations)
 └─ integration.mjs / integration2.mjs / i3.mjs / check_names.mjs
 tools/
 └─ crosscheck.py           exe-to-TS cross-check (docs/crosscheck.md)
@@ -119,6 +121,8 @@ docs/                      full documentation index: docs/README.md
 ├─ ONP2-protocol-and-restoration.md / original-vb-project.md
 ├─ IMPLEMENTATION-NOTES.md        implementation baseline, 2026-11-07/08 fixes, deliberate deviations
 ├─ crosscheck.md                   cross-check tool: usage, exe map, report reading
+├─ performance.md                  performance review and landed optimizations
+├─ bench-baseline.json             raw benchmark data before/after the optimization
 ├─ reviews/                        11 implementation audit reports + verbatim reference material
 ├─ pps4-v2-changes/               historical archive of the PPS4 replacement (current: pps4-v2.md)
 ├─ process-artifacts/             index of workspace temp archives and lost scratch files
@@ -238,6 +242,11 @@ A round of targeted optimisation was done during the port. Everything was measur
 `npm run bench` **before** changing anything — and the measurement showed there was really only
 one bottleneck: the linear scan in `FirstExceeding`.
 
+> **Added 2026-11-08**: `npm run bench` only covered the 2 built-in notations. A new
+> `npm run bench:notations` covers all 30 restored notations; five internal optimisations
+> and an expansion-tree OOM guard landed (`fs` 1.60×, `less` 1.47×, `firstExceeding` 1.37×),
+> with the full output snapshot byte-for-byte unchanged. See [`docs/performance.md`](./docs/performance.md).
+
 ### Two algorithmic optimisations
 
 **1. `FirstExceeding`: linear scan → exponential search + binary search (O(n) → O(log n))**
@@ -319,6 +328,7 @@ navigation hub, grouped by purpose:
 | Process artifacts | inventory of three temp archives, decompiler slices, files deleted and unrecoverable | [`docs/process-artifacts/README.md`](./docs/process-artifacts/README.md) |
 | Port source material | protocol text, original README, VB identifier map, compilable restorations | [`docs/restored/README.md`](./docs/restored/README.md) |
 | Cross-check tool | 26 exes vs TS notations, exe map, non-exiting process model, report reading | [`docs/crosscheck.md`](./docs/crosscheck.md) |
+| Performance | all-30 benchmark, hotspots, landed A/B optimizations, expansion-tree OOM guard, baseline | [`docs/performance.md`](./docs/performance.md) |
 | Change log | files touched per round, provenance, excluded process artifacts | [`docs/CHANGELOG.md`](./docs/CHANGELOG.md) |
 
 > **Filename convention**: every filename in this repository is ASCII (including zip entries).

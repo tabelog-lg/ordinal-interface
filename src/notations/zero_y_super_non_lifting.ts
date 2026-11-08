@@ -10,6 +10,7 @@ import { SeqNotation } from './core/notation';
 import { SEQMAX, seqLimitTwo, pare } from './core/seq';
 
 export class ZeroYSuperNonLifting extends SeqNotation {
+  protected override usePm = true;
   override readonly name = 'Ultimately Idealized 0-Y Sequence';
   protected override bias = 0;
   protected override limitArr(n: number): number[] {

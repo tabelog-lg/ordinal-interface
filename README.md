@@ -73,7 +73,8 @@ npm run preview  # 预览构建产物
 
 ```bash
 npm run verify   # 逻辑自检
-npm run bench    # 性能基准（改动前后对比用）
+npm run bench             # 性能基准：2 个内置记号 + 引擎组合
+npm run bench:notations   # 性能基准：全部 30 个复原记号（独立子进程）
 ```
 
 约 200 项断言，覆盖五个协议命令、表达式解析/格式化、`Limit` 与 `0` 的短路、表达式校验、
@@ -117,7 +118,8 @@ src/
    └─ {30 个记号}.ts
 tests/
 ├─ verify.ts              逻辑自检（不依赖 DOM）
-├─ verify_notations.mjs    ★ 记号插件回归（95 条：修正项 + PPS4 替换 + 契约锁定）
+├─ verify_notations.mjs    ★ 记号插件回归（99 条：修正项 + PPS4 替换 + 契约锁定 + 性能快照）
+├─ bench_notations.mjs     ★ 全 30 记号测速（npm run bench:notations）
 ├─ integration.mjs        把 30 个记号塞进宿主 / 序数尺 / 展开树跑一遍
 ├─ integration2.mjs       查每个记号命令 1（基本列）的形态
 ├─ i3.mjs                 查给定表达式后展开是否严格递增
@@ -132,6 +134,8 @@ docs/                         ★ 全部文档的总导航见 docs/README.md
 ├─ IMPLEMENTATION-NOTES.md         ★ 实现基准、修正清单、明确不改的偏移与理由
 ├─ pps4-v2.md                      PPS4 当前实现基准（原 v2，旧版已删除）
 ├─ crosscheck.md                   ★ 对拍工具用法、26 exe 映射、报告判读
+├─ performance.md                  ★ 性能评估与优化落地记录（含 A/B 组取舍）
+├─ bench-baseline.json             落地前后全 30 记号测速原始数据
 ├─ reviews/                        ★ 11 份实现审查报告 + 基准原文 + 差分数据
 │  ├─ README.md                     索引与「报告↔本轮修正」对应表
 │  ├─ audit-*.md                  11 份审查 / 源码对照报告
@@ -255,6 +259,11 @@ UI、列表渲染、默认选中逻辑都是通用的，不用再改别处。
 移植时做过一轮针对性优化。改动前用 `npm run bench` 量过，**先定位再动手** ——
 实测下来真正的瓶颈只有一个：`FirstExceeding` 的线性扫描。
 
+> **2026-11-08 追加一轮**：`npm run bench` 只覆盖 2 个内置记号，本轮补了
+> `npm run bench:notations`（全部 30 个复原记号），落地 5 项纯内部优化与
+> 展开树连续展开的 OOM 护栏，`fs` 1.60× / `less` 1.47× / `firstExceeding` 1.37×，
+> 全量输出快照逐字不变。详见 [`docs/performance.md`](./docs/performance.md)。
+
 ### 两个算法层面的优化
 
 **1. `FirstExceeding` 线性扫描 → 指数搜索 + 二分（O(n) → O(log n)）**
@@ -316,7 +325,7 @@ UI、列表渲染、默认选中逻辑都是通用的，不用再改别处。
 ## 十、文档导航
 
 全部文档收在 [`docs/`](./docs/README.md) 下，**总导航与分组说明见 [`docs/README.md`](./docs/README.md)**。
-按用途分七组：
+按用途分八组：
 
 | 组 | 内容 | 入口 |
 |---|---|---|
@@ -326,6 +335,7 @@ UI、列表渲染、默认选中逻辑都是通用的，不用再改别处。
 | 过程性资料 | 三个临时文件包的清单、反编译切片索引、已删除且无法恢复的文件 | [`docs/process-artifacts/README.md`](./docs/process-artifacts/README.md) |
 | 移植依据 | 协议条文、原项目说明、VB 标识符对照、可编译的 C++/C#/VB 复原源码 | [`docs/ONP2-protocol-and-restoration.md`](./docs/ONP2-protocol-and-restoration.md)、[`docs/restored/README.md`](./docs/restored/README.md) |
 | 对拍工具 | 26 个 exe ⇄ TS 记号逐条对拍、映射表、EOF 后不退出的进程模型、报告判读 | [`docs/crosscheck.md`](./docs/crosscheck.md) |
+| 性能 | 全 30 记号测速、热点定位、A/B 组优化落地、展开树 OOM 护栏、基线数据 | [`docs/performance.md`](./docs/performance.md) |
 | 变更记录 | 每轮改了哪些文件、资料来源、哪些过程产物未纳入 | [`docs/CHANGELOG.md`](./docs/CHANGELOG.md) |
 
 > **文件名约定**：仓库内所有文件名一律 ASCII（含交付 zip 条目）。

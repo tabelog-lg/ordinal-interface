@@ -22,8 +22,10 @@
 | 找反编译切片 / 快照 / 已删文件去哪了 | [`./process-artifacts/README.md`](./process-artifacts/README.md) |
 | 逐行对照 ONP2 协议与混淆名还原 | [`./ONP2-protocol-and-restoration.md`](./ONP2-protocol-and-restoration.md) |
 | 编译 C++ / C# / VB 复原版做对拍 | [`./restored/README.md`](./restored/README.md) |
+| 测速、看性能热点与优化落地记录 | [`./performance.md`](./performance.md) → [`../tests/bench_notations.mjs`](../tests/bench_notations.mjs) |
 | 用 26 个 exe 对拍 TS 记号、读报告 | [`./crosscheck.md`](./crosscheck.md) → [`../tools/crosscheck.py`](../tools/crosscheck.py) |
-| 跑回归测试 | [`../tests/verify_notations.mjs`](../tests/verify_notations.mjs)（`npm run verify:notations`） |
+| 跑回归测试 | [`../tests/verify_notations.mjs`](../tests/verify_notations.mjs)（`npm run verify:notations`，99 条） |
+| 跑全记号测速 | `npm run bench:notations` → [`../tests/bench_notations.mjs`](../tests/bench_notations.mjs) |
 | 查每轮动了哪些文件、资料从哪来 | [`./CHANGELOG.md`](./CHANGELOG.md) |
 
 ---
@@ -38,6 +40,8 @@ docs/
 ├─ original-vb-project.md           原桌面程序 README（目录结构、编译、用法、已知问题）
 ├─ IMPLEMENTATION-NOTES.md          ★ 实现基准、2026-11-07/08 修正清单、明确不改的偏移与理由
 ├─ crosscheck.md                    ★ 对拍工具：TS 记号 ⇄ 26 个 exe，用法/映射/判读口径
+├─ performance.md                   ★ 性能评估、A/B 优化落地、展开树 OOM 护栏
+├─ bench-baseline.json              落地前后全 30 记号测速原始数据
 ├─ pps4-v2.md                       PPS4 当前实现基准（原 v2；旧版已删除）
 ├─ reviews/                         ★ 11 份实现审查报告 + 基准原文 + 差分数据（15 个文件）
 │  ├─ README.md                      索引：结论速览、报告↔本轮修正的对应
@@ -138,6 +142,15 @@ docs/
 （用户提供的 26 个原始 exe 名，含中文与希腊字母）、`reviews/` 归档数据里
 记录的原 exe 名，以及移植依据原文中提到的历史资料名。这些按原名保留，
 因为脚本要按原名查找文件、报告要如实复现当时的输入。
+
+### H. 性能与测速
+
+[`performance.md`](./performance.md) 记录 2026-11-08 的性能轮次：原先 `tests/bench.ts`
+只覆盖 2 个内置记号，本轮补上覆盖全部 30 个复原记号的 `tests/bench_notations.mjs`
+与 `npm run bench:notations`，落地 A/B 组内部优化（`fs` 1.60×、`less` 1.47×、
+`firstExceeding` 1.37×）并修掉 4 个 PPS4 弱化变体在连续展开时的 OOM。
+所有改动以「全量输出快照逐字一致」为硬约束，回归组 D 固化了 FNV-1a 哈希与
+40 条畸形矩阵串的期望值。原始测速数据在 [`bench-baseline.json`](./bench-baseline.json)。
 
 ---
 

@@ -5,6 +5,91 @@
 
 ---
 
+## 2026-11-08（第三轮）：性能优化落地、展开树 OOM 护栏、全记号测速
+
+来源：用户要求「把这些改动（包括 PPS4 那些）都落地，B 组那些也可以试一下」。
+完整技术记录见 [`performance.md`](./performance.md)，原始数据见
+[`bench-baseline.json`](./bench-baseline.json)。
+
+**硬约束**：本轮不改任何记号的输出，也不改与序数尺 / 展开树 / `validate` 逼近链
+的组合行为。全量输出快照（30 记号 × 8 语料 × 6 次调用 + 64 组 `less`）优化前后
+**JSON 逐字相同**，FNV-1a 哈希 `1506148283` 固化进回归组 D。
+
+### 1) A 组：纯内部优化（5 个文件）
+
+| 文件 | 改动 |
+|---|---|
+| [`../src/notations/core/matrix.ts`](../src/notations/core/matrix.ts) | `matrixCompare()` 去掉 `concat(pad)` 与每行两次 `slice`，改成按偏移直接比 300 格 |
+| [`../src/notations/core/seq.ts`](../src/notations/core/seq.ts) | `seqCompare` / `seqCompare1` 去掉多余的 502 元素数组 |
+| [`../src/notations/core/notation.ts`](../src/notations/core/notation.ts) | `pred()` 空序列返回 `[]`；`pm` 改空数组 + `usePm` 开关 |
+| [`../src/notations/zero_y.ts`](../src/notations/zero_y.ts)、[`../src/notations/zero_y_super_non_lifting.ts`](../src/notations/zero_y_super_non_lifting.ts) | 打开 `usePm = true`（全仓库仅这两个记号读 `pm`） |
+| [`../src/notations/core/bms.ts`](../src/notations/core/bms.ts) | 301 元素数组不再预填 0，未写位置按 `?? 0` 读 |
+
+### 2) B 组：试过之后的落地与调整
+
+- **B6 `txma` 线性解析**：落地为「快路径 + 回退」。新增 `txmaFast()` 单游标扫描
+  标准矩阵串；嵌套 / 未闭合 / 非数字 / 尾部多余内容一律返回 `null`，交给
+  `txmaLegacy()`（原逐字符模拟，原样保留）。同进程 A/B 实测纯解析 **1.25×**，
+  真实语料 68 条快路径 68/68 命中。
+- **B7 `matrixType0` 只解析末行**：**换了形态**。`ymode 0/1` 的列数推断依赖第 2 行，
+  只解析末行拿不到 `cols`；等价收益改由 A4 取得。
+- **A4 合并解析**：新增 `matrixParse()`，一次解析同时给出 `m / rows / cols /
+  typeCode`；`MatrixNotation.fs()` 把原本的两遍解析合并。`matrixType0()` 保留轻量
+  实现，不给 `typeOf()` 添复合对象分配。
+
+### 3) 展开树连续展开护栏（bug 修复）
+
+[`../src/core/tree.ts`](../src/core/tree.ts) 加 `CONTINUOUS_EXPAND_GUARD = 10_000`：
+`click(..., continuous=true)` 的 `for(;;)` 单次最多插入 1 万节点。
+四个 PPS4 弱化变体（`pps4_weak` / `pps4_second` / `pps4_third` /
+`pps4_extremely_weak`）原本连续展开出的新节点始终判为极限，15 秒吃满 1 GB 堆
+后 V8 直接 OOM；现在同步返回、行数停在 10003，耗时 5~28 ms。
+**只加护栏、不改展开规则**；正常记号连续展开 8 次的行数与优化前逐字一致。
+
+### 4) 测速工具与回归
+
+| 新文件 | 内容 |
+|---|---|
+| [`../tests/bench_notations.mjs`](../tests/bench_notations.mjs) | 覆盖全部 30 个记号的基准：5 个协议原语 + `firstExceeding` / `validate` 冷路径 + 序数尺 draw / wheel / 展开树 click；每记号独立子进程 + timeout + 堆上限 |
+| [`../package.json`](../package.json) | 新增 `npm run bench:notations` |
+| [`bench-baseline.json`](./bench-baseline.json) | 同进程 A/B 加速比 + 落地前 / 后全 30 记号原始数值 |
+| [`performance.md`](./performance.md) | 热点定位、A/B 组取舍、验证、明确不改项、复现命令 |
+
+[`../tests/verify_notations.mjs`](../tests/verify_notations.mjs) 新增 **D 组 4 条**
+（95 → 99）：D1 全量输出快照哈希、D2 40 条畸形矩阵串逐字一致、
+D3 四个弱化变体连续展开不再 OOM 且行数有界、D4 正常记号连续展开 8 次行数不变。
+
+### 5) 收益（同进程 A/B，优化前 / 后两份 bundle 同时载入、交替调用、5 轮中位数）
+
+| 指标 | 10 个代表记号 | 矩阵系 7 个 |
+|---|---|---|
+| `fs` | **1.60×** | **1.75×** |
+| `less` | **1.47×** | **1.53×** |
+| `firstExceeding` | **1.37×** | **1.40×** |
+| `typeOf` / `pred` / `fsLimit` | 1.01× / 1.02× / 0.99×（持平） | — |
+
+> 上一轮评估里跨批次测出的 `less 2.18×` 受机器负载影响，本轮一律以同进程 A/B 为准。
+
+### 6) 验证
+
+| 项 | 结果 |
+|---|---|
+| 全量输出快照逐字一致 | ✅ |
+| `txma` 快路径 / 回退差分 fuzz：3527 语料 × 2 种 C × 3 种 ymode = **21162 组** | **0 mismatch** |
+| `verify:notations` | **99 / 99** |
+| `verify` / `check-names`（30 一致）/ `integration`（30 记号 0 失败）/ 前端打包 | ✅ |
+| `bench:notations` 全 30 记号 | **0 异常**（护栏修好后 4 个弱化变体不再 OOM） |
+| 仓库内文件名全 ASCII / 导引文档相对链接 | 0 个非 ASCII / 0 个失效 |
+
+### 7) 明确未纳入
+
+`txar()` 的固定 501 预分配（改成短数组会让 `zero_y` 的 `fs` 慢 2 倍）、
+`Int32Array`（越界写静默丢失会改语义）、`fs(n)` 块数偏移与各记号 `ex()` 规则、
+`firstExceeding` 二分 / `BoundedCache`、LELS / RRSS / RCS / PPS 家族的定义层偏差。
+理由见 [`performance.md`](./performance.md) 第六节。
+
+---
+
 ## 2026-11-08（第二轮）：全 ASCII 文件名 + 对拍工具入库
 
 来源：用户要求「整个仓库不要出现中文文件名」，并指出对拍工具没写进文档。

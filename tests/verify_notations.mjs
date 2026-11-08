@@ -11,7 +11,8 @@
  */
 
 import { NOTATIONS as P } from '../src/notations/index';
-import { engine } from '../src/engine/host';
+import { engine, EngineHost } from '../src/engine/host';
+import { TreeEngine } from '../src/core/tree';
 
 let pass = 0;
 let fail = 0;
@@ -156,6 +157,91 @@ for (const [id, p] of Object.entries(P)) {
   } catch (e) { rulerBad.push(`${id}:${String(e.message || e).slice(0, 30)}`); }
 }
 ok('30 个记号 firstExceeding("0","Limit") 全部可用', rulerBad.length === 0, rulerBad.join(','));
+
+
+// ════════════════════════════════════════════════
+section('D. 性能优化回归：输出逐字不变（2026-11-08）');
+
+// D1. 全量输出快照：30 个记号 × fsLimit(0..7) × (typeOf / pred / fs(0..3)) +
+//     64 组 less 交叉比较，FNV-1a 哈希。常量取自**优化前**的远端 main。
+//     若今后有意调整任何记号的输出，需要同步更新这个常量并说明理由。
+function snapshotHash() {
+  let h = 2166136261 >>> 0;
+  const feed = (v) => {
+    const s = String(v);
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    h ^= 0x0a;
+    h = Math.imul(h, 16777619) >>> 0;
+  };
+  for (const [id, p] of Object.entries(P)) {
+    feed(id);
+    const base = [];
+    for (let i = 0; i < 8; i++) base.push(p.fsLimit(i));
+    for (const s of base) {
+      feed(s);
+      try { feed(p.typeOf(s)); } catch (e) { feed('ERR:' + e.message); }
+      try { feed(p.pred(s)); } catch (e) { feed('ERR:' + e.message); }
+      for (let n = 0; n < 4; n++) {
+        try { feed(p.fs(n, s)); } catch (e) { feed('ERR:' + e.message); }
+      }
+    }
+    for (const a of base) for (const b of base) {
+      try { feed(p.less(a, b) ? 1 : 0); } catch (e) { feed('ERR:' + e.message); }
+    }
+  }
+  return h >>> 0;
+}
+eq('30 记号全量输出快照 FNV-1a', String(snapshotHash()), '1506148283');
+
+// D2. txma 线性快路径的畸形串回退：嵌套 / 未闭合 / 非数字 / 尾部多余 / 两位数。
+//     期望值全部取自优化前远端 main 的实测输出。
+const EDGE = [["bashicu_matrix","(0)(1)x","3","(0)","(0)(0)"],["bashicu_matrix","((0))(1)","3","(0,0)(0,0)","(0,0)(0,0)(0,0)"],["bashicu_matrix","(0)(1","2","(0)","(0)(1"],["bashicu_matrix","(a)(1)","3","(0)","(0)(0)"],["bashicu_matrix","(0)(1) ","3","(0)","(0)(0)"],["bashicu_matrix","(0,0,0)(10,11,12)(20,21,22)","3","(0,0,0)(10,11,12)","(0,0,0)(10,11,12)(20,21,21)"],["bashicu_matrix","(0)(1)(2)(3)","3","(0)(1)(2)","(0)(1)(2)(2)"],["bashicu_matrix","()","1","0","()"],["bashicu_matrix","(0)","2","0","(0)"],["bashicu_matrix","(0,0)(1,1)(2,2)","3","(0,0)(1,1)","(0,0)(1,1)(2,1)"],["bms_row_extend","(0)(1)x","3","(0)","(0)(0)"],["bms_row_extend","((0))(1)","3","(0)(0)","(0)(0)(0)"],["bms_row_extend","(0)(1","2","(0)","(0)(1"],["bms_row_extend","(a)(1)","3","(0)","(0)(0)"],["bms_row_extend","(0)(1) ","3","(0)","(0)(0)"],["bms_row_extend","(0,0,0)(10,11,12)(20,21,22)","3","(0)(10,11,12)","(0)(10,11,12)(20,21,21)"],["bms_row_extend","(0)(1)(2)(3)","3","(0)(1)(2)","(0)(1)(2)(2)"],["bms_row_extend","()","1","0","()"],["bms_row_extend","(0)","2","0","(0)"],["bms_row_extend","(0,0)(1,1)(2,2)","3","(0)(1,1)","(0)(1,1)(2,1)"],["lels","(0)(1)x","3","(0)","(0)(0)"],["lels","((0))(1)","3","(0)(0)","(0)(0)(0)"],["lels","(0)(1","2","(0)","(0)(1"],["lels","(a)(1)","3","(0)","(0)(0)"],["lels","(0)(1) ","3","(0)","(0)(0)"],["lels","(0,0,0)(10,11,12)(20,21,22)","3","(0,0,0)(10,11,12)","(0,0,0)(10,11,12)(19,21,22)(10,11,34)"],["lels","(0)(1)(2)(3)","3","(0)(1)(2)","(0)(1)(2)(2)"],["lels","()","1","0","()"],["lels","(0)","2","0","(0)"],["lels","(0,0)(1,1)(2,2)","3","(0,0)(1,1)","(0,0)(1,1)(1,2)"],["ppm00t","(0)(1)x","3","(0)","(0)(0)"],["ppm00t","((0))(1)","3","(0,0)(0,0)","(0)(0)(0)(0)"],["ppm00t","(0)(1","2","(0)","(0)(1"],["ppm00t","(a)(1)","3","(0)","(0)(0)"],["ppm00t","(0)(1) ","3","(0)","(0)(0)"],["ppm00t","(0,0,0)(10,11,12)(20,21,22)","3","(0,0,0)(10,11,12)",""],["ppm00t","(0)(1)(2)(3)","3","(0)(1)(2)","(0)(1)(2)(2)"],["ppm00t","()","1","0","()"],["ppm00t","(0)","2","0","(0)"],["ppm00t","(0,0)(1,1)(2,2)","3","(0,0)(1,1)","(0,0)(1,1)(2,1)"]];
+const edgeActual = EDGE.map(([id, s]) => {
+  const p = P[id];
+  const g = (fn) => { try { return fn(); } catch (e) { return 'ERR:' + e.message; } };
+  return [id, s, g(() => p.typeOf(s)), g(() => p.pred(s)), g(() => p.fs(1, s))];
+});
+const edgeDiff = edgeActual.filter((r, i) => JSON.stringify(r) !== JSON.stringify(EDGE[i]));
+ok('矩阵快路径 / 回退：40 条畸形串输出逐字一致', edgeDiff.length === 0,
+  edgeDiff.length ? JSON.stringify(edgeDiff.slice(0, 2)) : '40 条全一致');
+
+// D3. 展开树连续展开护栏：4 个 PPS4 弱化变体原本会无限插节点直到 OOM，
+//     现在必须同步返回、行数有界；正常记号的展开结果一字不变。
+let guardBad = [];
+for (const id of ['pps4_weak', 'pps4_second', 'pps4_third', 'pps4_extremely_weak']) {
+  try {
+    const h = new EngineHost();
+    h.load(P[id]);
+    const t = new TreeEngine(h);
+    t.init();
+    const clicked = t.click(10, 43, true);
+    let n = 0;
+    for (const _ of t.visibleRows(1e9, 43)) n++;
+    if (!clicked || n <= 2 || n > 10_005) guardBad.push(`${id}:rows=${n}`);
+  } catch (e) { guardBad.push(`${id}:${String(e.message).slice(0, 30)}`); }
+}
+ok('4 个 PPS4 弱化变体连续展开不再 OOM 且行数有界', guardBad.length === 0, guardBad.join(','));
+
+const NORMAL_ROWS = [
+  ['bashicu_matrix', 214], ['pps2', 130], ['zero_y', 214],
+  ['ppm00t', 3073], ['stos', 81],
+];
+let normalBad = [];
+for (const [id, expected] of NORMAL_ROWS) {
+  const h = new EngineHost();
+  h.load(P[id]);
+  const t = new TreeEngine(h);
+  t.init();
+  for (let i = 0; i < 8; i++) t.click(10, 43, true);
+  let n = 0;
+  for (const _ of t.visibleRows(1e9, 43)) n++;
+  if (n !== expected) normalBad.push(`${id}:${n}≠${expected}`);
+}
+ok('正常记号连续展开 8 次的行数与优化前一致（护栏未误伤）',
+  normalBad.length === 0, normalBad.join(','));
 
 console.log(`\n${'='.repeat(72)}`);
 console.log(`通过 ${pass} / ${pass + fail}${fail ? `，失败 ${fail}` : '  ✅ 全部通过'}`);

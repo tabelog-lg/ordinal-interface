@@ -204,6 +204,7 @@ integration/                       ← 已改好的项目副本
 | 可编译的 C++ / C# / VB 复原源码与对拍流程 | [`docs/restored/README.md`](docs/restored/README.md) |
 | 实现基准与本次修正取舍 | [`docs/IMPLEMENTATION-NOTES.md`](docs/IMPLEMENTATION-NOTES.md) |
 | 26 个 exe ⇄ TS 记号的对拍工具与报告判读 | [`docs/crosscheck.md`](docs/crosscheck.md) |
+| 全 30 记号测速、性能优化落地与展开树护栏 | [`docs/performance.md`](docs/performance.md) |
 | 每轮改了哪些文件、资料来源 | [`docs/CHANGELOG.md`](docs/CHANGELOG.md) |
 
 `docs/` 不参与构建（`tsconfig.json` 的 `include` 只有 `["src"]`），

@@ -15,6 +15,19 @@
 import { engine, type EngineHost } from '../engine/host';
 import { DList, type DNode } from './dlist';
 
+/**
+ * 「连续展开」单次点击最多插入的节点数。
+ *
+ * 原程序（以及本项目初版）这里的 for(;;) 只以「下一行不是极限序数」为终止条件。
+ * 四个 PPS4 弱化变体（pps4_weak / pps4_second / pps4_third /
+ * pps4_extremely_weak）连续展开出的新节点始终被判为极限，链表会无限增长：
+ * 实测 15 秒吃满 1 GB 堆后 V8 直接 FATAL ERROR，页面进程被杀。
+ *
+ * 这是**只加护栏、不改任何展开规则**：正常记号在到达上限前早就收敛
+ * （对照组 pps4 连续点 8 次也只到 130 行），单击模式与序数尺完全不受影响。
+ */
+const CONTINUOUS_EXPAND_GUARD = 10_000;
+
 export interface TreeNodeInfo {
   /** 序数表达式 */
   expression: string;
@@ -138,8 +151,12 @@ export class TreeEngine {
         }
 
         if (continuous) {
-          // 连续展开：一路往下插，直到遇到非极限序数
+          // 连续展开：一路往下插，直到遇到非极限序数。
+          // ★ 节点数护栏：某些记号的展开链不会自然收敛（见文件头注释），
+          //   没有上限会把整个页面进程拖进 OOM。
+          let inserted = 0;
           for (;;) {
+            if (++inserted > CONTINUOUS_EXPAND_GUARD) break;
             cursor = cursor.next;
             if (!cursor) break;
             if (!cursor.value.isLimit) break;

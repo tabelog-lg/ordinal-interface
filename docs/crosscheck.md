@@ -231,5 +231,9 @@ EOF 正常退出与 EOF 不退出两类进程都能正确收尾；造一个「�
 「保留原味」的边界行为，替身跑出的差异只用来证明脚本可用，真实结论请以
 26 个 exe 跑出来的报告为准。
 
+**测速是另一个工具**：`npm run bench:notations`（[`../tests/bench_notations.mjs`](../tests/bench_notations.mjs)）
+覆盖全部 30 个记号的五个原语与 UI 组合，报告见 [`performance.md`](./performance.md)。
+本工具只做「TS ⇄ exe 逐条对拍」，不做性能测量。
+
 工具目录说明见 [`../tools/README.md`](../tools/README.md)，文档总导航见
 [`README.md`](./README.md)。

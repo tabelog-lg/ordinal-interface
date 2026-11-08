@@ -18,6 +18,11 @@
 > 用法与判读口径见 [`crosscheck.md`](./crosscheck.md)；上一轮的真实 exe 结果归档在
 > [`reviews/audit-crosscheck-summary.json`](./reviews/audit-crosscheck-summary.json) 与
 > [`reviews/audit-diff-details.txt`](./reviews/audit-diff-details.txt)。
+>
+> **2026-11-08 追加一轮纯性能优化**（不改任何输出）：A/B 组内部优化 + 展开树
+> 连续展开 OOM 护栏，详见 [`performance.md`](./performance.md)。本文件 §1~§2 的
+> 「改了什么 / 明确不改什么」口径不变，新增的回归组 D 用全量输出快照哈希
+> 锁住了这一轮没有动到数学语义。
 
 ---
 

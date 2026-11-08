@@ -124,28 +124,26 @@ export function seqType0(s: string, bias: number): string {
 
 /** compare0: 逐位比较，a<b 输出 "2"，否则输出 "1" */
 export function seqCompare(sa: string, sb: string, bias: number): string {
-  const a = new Array<number>(502).fill(0);
+  // 原实现多分配一个 502 元素数组再把 p 整段复制进去；p[i] ?? 0 直接比即可，
+  // 读越界与「补 0 缓冲」等价，输出逐字相同。
   const p = txar(sa, bias);
-  for (let i = 0; (p[i] ?? 0) !== 0; i++) a[i] = p[i];
   const q = txar(sb, bias);
   // 原程序靠「读到数组之外」来终止（未定义行为）；这里显式给上界，
   // 完全相等时按 a >= b 返回 "1" —— 与原 exe 在合法输入上的结果一致
   let i = 0;
-  while (i < 502 && (a[i] ?? 0) === (q[i] ?? 0)) i++;
+  while (i < 502 && (p[i] ?? 0) === (q[i] ?? 0)) i++;
   if (i >= 502) return '1';
-  return (a[i] ?? 0) < (q[i] ?? 0) ? '2' : '1';
+  return (p[i] ?? 0) < (q[i] ?? 0) ? '2' : '1';
 }
 
 /** 1 起址版本（Remainder Retention 专用） */
 export function seqCompare1(sa: string, sb: string): string {
-  const a = new Array<number>(502).fill(0);
   const p = txar1(sa);
-  for (let i = 1; (p[i] ?? 0) !== 0; i++) a[i] = p[i];
   const q = txar1(sb);
   let i = 0;
-  while (i < 502 && (a[i] ?? 0) === (q[i] ?? 0)) i++;
+  while (i < 502 && (p[i] ?? 0) === (q[i] ?? 0)) i++;
   if (i >= 502) return '1';
-  return (a[i] ?? 0) < (q[i] ?? 0) ? '2' : '1';
+  return (p[i] ?? 0) < (q[i] ?? 0) ? '2' : '1';
 }
 
 /** 1 起址的解析器（对应 Remainder Retention.exe 的 txar） */
